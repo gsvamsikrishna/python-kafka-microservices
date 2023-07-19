@@ -1,5 +1,6 @@
-
-![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/b8adb476-2b70-4047-a378-4733a38a8f2e)
+<div align="center">
+    <img src="https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/b8adb476-2b70-4047-a378-4733a38a8f2e" width=75% height=75%>
+</div>
 
 # <img src="static/images/logo1.png" width="32" /> Building Event Driven Microservices with Confluent <img src="static/images/logo1.png" width="32" />
 This is an example of a microservice ecosystem using the CQRS (Command and Query Responsibility Segregation) and Event Sourcing patterns, and nothing better to explain that by using as reference a pizza takeaway shop. Who doesn't love a pizza? :blush:
@@ -24,16 +25,46 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 
 ***
 
-## **Architecture Diagram**
 
-<div align="center">
-    <img src="static/images/docs/service_flow.png" width=75% height=75%>
-</div>
+## CQRS vs Event Sourcing
+While event sourcing can be used to implement CQRS, it does not necessarily imply event sourcing. In other words, CQRS is focused on the separation of write and read operations, while event sourcing is focused on storing the history of changes to a system as a sequence of events. CQRS and event sourcing can complement each other, but they are not the same thing.
+
+## Pizza Takeaway Shop
+
+### <div align="center">High level view</div>
+This pizza takeaway shop ecosystem was designed using Python and made simple for demo/learning purposes, basically the following are the app/microservices created:
+- Web application using the Flask lib (```webapp.py```) so users can login to, customise their pizza, order and follow up the status of their order. This webapp will be the Command portion of the CQRS pattern. To make it simpler a SQLite3 state store* is being used as the materialised view between Command and Query, however in a real life scenario that could be an in-memory data store or ksqlDB/Flink
+- Once the pizza is ordered it will go through four microservices (following the same flow of a real pizza shop):
+  - Assemble the pizza as per order (```msvc_assemble.py```)
+  - Bake the pizza (```msvc_bake.py```)
+  - Have it delivered (```msvc_delivery.py```)
+  - Process status (```msvc_status.py```): Whenever one of the previous microservices complete their task they will communicate with this microservice so it can update the web application. This microservice will be the Query portion of the CQRS pattern. It will have the materialised views stored in the aforementioned SQLite3 state store*
+- All interprocess communication is via an Apache Kafka cluster
+
+(*) By default SQLite3 will be used, but that can be changed via system configuration file (default is ```'config_sys/default.ini'```) by setting a different python class (the base/abstract class is defined on utils.db, class name is ```BaseStateStore```), see below the default system configuration:
+```
+[state-store-orders]
+db_module_class = utils.db.sqlite
+
+[state-store-delivery]
+db_module_class = utils.db.sqlite
+```
+
+IMPORTANT: In ordert to keep consistency with Java based clients (using murmur2 partitioner), the producers will also set the topic partition using the murmur2 hash function, other than the standard CRC32 on librdkafka.
+
+Webapp and four microservices in action:
+![image](static/images/docs/service_flow.png)
+
+### <div align="center">Low level view</div>
+Detailed view of all microservices and to what Kafka topics their produce and are subscribed to:
+![image](static/images/docs/gen_architecture.png)
+
+
+This workshop will be utilizing kafka cluster and ksqlDB running on Confluent Cloud. Microservices (python) and HTTP server will be running on your local machines. 
+***
 
 # <div align="center">-------------WIP--------------</div>
 
-This workshop will be utilizing mongoDB Atlas, BigQuery, and Data Studio instances that are being managed by Confluent. You will not be able to access these instances outside of the workshop time.  To test ksqlDB and connectors outside of the workshop you can take a look at the ksqlDB [quickstart](https://docs.confluent.io/cloud/current/get-started/ksql.html) and fully-managed connectors [page](https://docs.confluent.io/cloud/current/connectors/index.html#kafka-connect-cloud).
-***
 
 ## **Prerequisites**
 
@@ -46,6 +77,10 @@ This workshop will be utilizing mongoDB Atlas, BigQuery, and Data Studio instanc
 1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
     * portquiz.net:443
     * portquiz.net:9092
+
+1. Python3 Installed
+2. Docker Installed
+3. 
 
 ***
 
