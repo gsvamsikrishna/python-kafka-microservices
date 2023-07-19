@@ -1,8 +1,9 @@
 
 ![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/b8adb476-2b70-4047-a378-4733a38a8f2e)
 
-# <div align="center"> Event Driven Microservices with Confluent</div>
-<div align="center"> Implementing an Event Sourcing/ CQRS microservices with Apache Kafka </div>
+# <img src="static/images/logo.png" width="32" /> Building Event Driven Microservices with Confluent <img src="static/images/logo.png" width="32" />
+This is an example of a microservice ecosystem using the CQRS (Command and Query Responsibility Segregation) and Event Sourcing patterns, and nothing better to explain that by using as reference a pizza takeaway shop. Who doesn't love a pizza? :blush:
+
 
 ## <div align="center">Lab Guide</div>
 
