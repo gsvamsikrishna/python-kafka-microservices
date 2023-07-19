@@ -1,7 +1,9 @@
-# WIP
+
 ![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/b8adb476-2b70-4047-a378-4733a38a8f2e)
 
 # <div align="center"> Event Driven Microservices with Confluent</div>
+<div align="center"> Implementing an Event Sourcing/ CQRS microservices with Apache Kafka </div>
+
 ## <div align="center">Lab Guide</div>
 
 ## **Agenda**
@@ -23,15 +25,11 @@
 
 ## **Architecture Diagram**
 
-
-
-# python-kafka-microservices
-Implementing an Event Sourcing/CQRS microservices with Apache Kafka
-
-
 <div align="center">
     <img src="static/images/docs/service_flow.png" width=75% height=75%>
 </div>
+
+# <div align="center">-------------WIP--------------</div>
 
 This workshop will be utilizing mongoDB Atlas, BigQuery, and Data Studio instances that are being managed by Confluent. You will not be able to access these instances outside of the workshop time.  To test ksqlDB and connectors outside of the workshop you can take a look at the ksqlDB [quickstart](https://docs.confluent.io/cloud/current/get-started/ksql.html) and fully-managed connectors [page](https://docs.confluent.io/cloud/current/connectors/index.html#kafka-connect-cloud).
 ***
