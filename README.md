@@ -130,7 +130,9 @@ An environment contains Confluent clusters and its deployed components such as C
 ***
 # <div align="center">-------------WIP--------------</div>
 
-## <a name="step-3"></a>Step 3: Create a Schema Registry Instance
+## <a name="step-3"></a>Step 3: Enable Stream Governance Essentials
+
+For the simplicity of the demo, no Schema Registry is being used. That is not an ideal scenario as the "contract" between Producers and Consumers are "implicitly hard coded" other than being declared through the schema registry
 
 A topic contains messages, and each message is a key-value pair. The message key or the message value (or both) can be serialized as JSON, Avro, or Protobuf. A schema defines the structure of the data format.
 
