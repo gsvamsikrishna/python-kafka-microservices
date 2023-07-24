@@ -50,7 +50,7 @@ db_module_class = utils.db.sqlite
 db_module_class = utils.db.sqlite
 ```
 
-IMPORTANT: In ordert to keep consistency with Java based clients (using murmur2 partitioner), the producers will also set the topic partition using the murmur2 hash function, other than the standard CRC32 on librdkafka.
+IMPORTANT: In order to keep consistency with Java based clients (using murmur2 partitioner), the producers will also set the topic partition using the murmur2 hash function, other than the standard CRC32 on librdkafka.
 
 Webapp and four microservices in action:
 ![image](static/images/docs/service_flow.png)
@@ -63,14 +63,13 @@ Detailed view of all microservices and to what Kafka topics their produce and ar
 This workshop will be utilizing kafka cluster and ksqlDB running on Confluent Cloud. Microservices (python) and HTTP server will be running on your local machines. 
 ***
 
-# <div align="center">-------------WIP--------------</div>
-
 
 ## **Prerequisites**
 
 1. Confluent Cloud Account
     * Sign-up for a Confluent Cloud account [here](https://www.confluent.io/confluent-cloud/tryfree/).
-    * Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”, then enter payment details under “Payment details & contacts”.
+    * You can also Sign-up through Cloud Marketplaces: [AWS Marketplace](https://docs.confluent.io/cloud/current/billing/ccloud-aws-payg.html) or [Azure Marketplace](https://docs.confluent.io/cloud/current/billing/ccloud-azure-payg.html) or [GCP Marketplace](https://docs.confluent.io/cloud/current/billing/ccloud-gcp-payg.html)
+    * Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”. New signups receive $400 to spend during their first 30 days. No credit card required.
 
     > **Note:** You will create resources during this workshop that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the workshop. More details on the specifics can be found [here](https://www.confluent.io/confluent-cloud/tryfree/).
 
@@ -78,11 +77,14 @@ This workshop will be utilizing kafka cluster and ksqlDB running on Confluent Cl
     * portquiz.net:443
     * portquiz.net:9092
 
-1. Python3 Installed
-2. Docker Installed
-3. 
+1. Install Python 3.8+ 
+2. Install Docker
+3. Install SQLite3
+4. Install python virtual environment: ```python3 -m pip install venv``` or ```python3 -m pip install virtualenv```
+5. Clone this repo: ```git clone git@github.com:ifnesi/python-kafka-microservices.git```
 
 ***
+# <div align="center">-------------WIP--------------</div>
 
 ## **Objective**
 
