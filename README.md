@@ -81,7 +81,7 @@ This workshop will be utilizing kafka cluster and ksqlDB running on Confluent Cl
 2. Install Docker
 3. Install SQLite3
 4. Install python virtual environment: ```python3 -m pip install venv``` or ```python3 -m pip install virtualenv```
-5. Clone this repo: ```git clone git@github.com:ifnesi/python-kafka-microservices.git```
+5. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices```
 
 ***
 
