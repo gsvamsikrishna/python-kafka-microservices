@@ -94,7 +94,6 @@ You will also learn how to get started with Confluent Cloud, and the resources a
 
 This workshop is perfect for those looking to build Event Driven Architcture use cases and to get started with Confluent Cloud. This is also a great session to ask the engineers your questions and participate in a forum with other attendees who already use Confluent Cloud or plan to use Confluent Cloud. In this workshop, Python will be used as programming language for building micro-services. Python Knowledge is NOT Mandatory.
 
-# <div align="center">-------------WIP--------------</div>
 
 ***
 
@@ -123,12 +122,13 @@ An environment contains Confluent clusters and its deployed components such as C
 
     * Click **Begin Configuration**.
 
-    * Choose **GCP** as your Cloud Provider and your preferred Region.
-        > **Note:** GCP is required as your Cloud Provider since you will be utilizing the fully-managed BigQuery sink connector for this workshop
-
+    * Choose **AWS/ Azure/ GCP** as your Cloud Provider and your preferred Region.
+        
     * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
 
+
 ***
+# <div align="center">-------------WIP--------------</div>
 
 ## <a name="step-3"></a>Step 3: Create a Schema Registry Instance
 
