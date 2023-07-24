@@ -84,15 +84,17 @@ This workshop will be utilizing kafka cluster and ksqlDB running on Confluent Cl
 5. Clone this repo: ```git clone git@github.com:ifnesi/python-kafka-microservices.git```
 
 ***
-# <div align="center">-------------WIP--------------</div>
 
 ## **Objective**
 
-In this workshop you will learn how Confluent Cloud can enable you to quickly and easily stand up a streaming ETL pipeline. During this workshop you’ll get hands-on experience with building out an end-to-end ETL pipeline; from extracting & loading data from out-of-the-box source & target systems with connectors to transforming the data in real-time with ksqlDB all in Confluent Cloud. The use case will be centered around creating dynamic product promotions based on real-time purchases, inventory levels, and clickstream data applying a number of transformations like filter, aggregate or join on your data streams, and then easily loading it in the destination application, all without having to type a single line of code.
+In this workshop you will learn how Confluent Cloud can enable you to design an Event Driven Microservices Application. During this workshop you’ll get hands-on experience with building out Confluent Cloud components; using a pre-built Python Micro-services application to produce and consume data; transforming the data in real-time with ksqlDB. The use case will be centered around accepting Pizza order events and passing it on to the food preparation system and delivery system, updating the various levels of food prepartion status to the customer and the delivery agent, update the orderstatus upon successful delivery.
 
-Attendees will leave with a clear understanding of their upcoming ETL implementation, how to get started with Confluent Cloud, and the resources available to assist with development.
+By the end of this workshop, you will have a solid understanding of building microservices architectures with Kafka, enabling you to create scalable, robust, and event-driven systems.
+You will also learn how to get started with Confluent Cloud, and the resources available to assist with development.
 
-This workshop is perfect for those looking to build the foundation for your data processing pipeline and ETL use cases and to get started with Confluent Cloud. This is also a great session to ask the engineers your questions and participate in a forum with other attendees who already use Confluent Cloud or plan to use Confluent Cloud.
+This workshop is perfect for those looking to build Event Driven Architcture use cases and to get started with Confluent Cloud. This is also a great session to ask the engineers your questions and participate in a forum with other attendees who already use Confluent Cloud or plan to use Confluent Cloud. In this workshop, Python will be used as programming language for building micro-services. Python Knowledge is NOT Mandatory.
+
+# <div align="center">-------------WIP--------------</div>
 
 ***
 
