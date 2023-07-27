@@ -128,21 +128,37 @@ An environment contains Confluent clusters and its deployed components such as C
 
 
 ***
-# <div align="center">-------------WIP--------------</div>
 
 ## <a name="step-3"></a>Step 3: Enable Stream Governance Essentials
 
-For the simplicity of the demo, no Schema Registry is being used. That is not an ideal scenario as the "contract" between Producers and Consumers are "implicitly hard coded" other than being declared through the schema registry
+Stream Governance includes broadly three major features: Schema Registry, Stream Catalog, and Stream Lineage
 
+### Schema Registry:
 A topic contains messages, and each message is a key-value pair. The message key or the message value (or both) can be serialized as JSON, Avro, or Protobuf. A schema defines the structure of the data format.
 
 Confluent Cloud Schema Registry is used to manage schemas and it defines a scope in which schemas can evolve. It stores a versioned history of all schemas, provides multiple compatibility settings, and allows schemas to evolve according to these compatibility settings. It is also fully-managed.
+For the simplicity of the demo, no Schema Registry is being used. That is not an ideal scenario as the "contract" between Producers and Consumers are "implicitly hard coded" other than being declared through the schema registry
 
-You will be exploring Confluent Cloud Schema Registry in more detail towards the end of the workshop. First, you will need to enable Schema Registry within your environment.
+### Stream Catalog:
+Stream catalog in Confluent Cloud centralizes all entities metadata and makes them available for search and discovery using the UI and APIs. Entity types available on the Stream catalog are:
+- Schemas - Schema subject name - Schema record name - Schema field name
+- Topics
+- Connectors
+
+### Stream Lineage:
+Stream lineage provides a graphical UI of event streams and data relationships with both a bird’s eye view and drill-down magnification for answering questions like:
+
+- Where did data come from?
+- Where is it going?
+- Where, when, and how was it transformed?
+
+You will be exploring Stream Lineage and Stream Catalog in more detail as part of the workshop. First, you will need to enable Stream Governance Essentials within your environment.
 
 1. Return to your environment by clicking on the Confluent icon at the top left corner and then clicking your environment tile.
 
-1. Click on **Schema Registry**. Select your cloud provider and region, and then click on **Enable Schema Registry**.
+1. On the right side pane, you will find **Stream Governance Package** grayed out. Click on "Enable Now".
+2. Select **Begin Configuration** under Essentials.
+3. Choose cloud provider and region. You can select the nearest region which has $0/hr to keep the costs low for this workshop. Click on **Enable** at the bottom of the page.
 
 ***
 
@@ -152,12 +168,13 @@ You will be exploring Confluent Cloud Schema Registry in more detail towards the
 
 1. Select **Global Access** and then **Continue**.
 
-1. Name your ksqlDB application and set the streaming units to
+1. Name your ksqlDB application and set the streaming units to 1 CSU
 
 1. Click **Launch Application**!
 > **Note:** A streaming unit, also known as a Confluent Streaming Unit (CSU), is the unit of pricing for Confluent Cloud ksqlDB. A CSU is an abstract unit that represents the linearity of performance.
 
 ***
+# <div align="center">-------------WIP--------------</div>
 
 ## <a name="step-5"></a>Step 5: Create a Topic using the Cloud UI
 
