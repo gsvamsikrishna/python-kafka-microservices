@@ -106,7 +106,7 @@ This workshop is perfect for those looking to build Event Driven Architcture use
 
 ***
 
-## <a name="step-2"></a>Step 2: Create an Environment and Cluster
+## <a name="step-2"></a>Step 2: Create an Environment and Enable Stream Governance Essentials
 
 An environment contains Confluent clusters and its deployed components such as Connect, ksqlDB, and Schema Registry. You have the ability to create different environments based on your company's requirements. Confluent has seen companies use environments to separate Development/Testing, Pre-Production, and Production clusters.
 
@@ -116,37 +116,23 @@ An environment contains Confluent clusters and its deployed components such as C
     * Specify a meaningful `name` for your environment and then click **Create**.
         > **Note:** It will take a few minutes to assign the resources to make this new environment available for use.
 
-1. Now that you have an environment, let's create a cluster. Select **Create Cluster**.
-    > **Note**: Confluent Cloud clusters are available in 3 types: **Basic**, **Standard**, and **Dedicated**. Basic is intended for development use cases so you should use that for this lab. Basic clusters only support single zone availability. Standard and Dedicated clusters are intended for production use and support Multi-zone deployments. If you’re interested in learning more about the different types of clusters and their associated features and limits, refer to this [documentation](https://docs.confluent.io/current/cloud/clusters/cluster-types.html).
 
-    * Choose the **Basic** cluster type.
-
-    * Click **Begin Configuration**.
-
-    * Choose **AWS/ Azure/ GCP** as your Cloud Provider and your preferred Region.
-        
-    * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
-
-
-***
-
-## <a name="step-3"></a>Step 3: Enable Stream Governance Essentials
 
 Stream Governance includes broadly three major features: Schema Registry, Stream Catalog, and Stream Lineage
 
-### Schema Registry:
+#### Schema Registry:
 A topic contains messages, and each message is a key-value pair. The message key or the message value (or both) can be serialized as JSON, Avro, or Protobuf. A schema defines the structure of the data format.
 
 Confluent Cloud Schema Registry is used to manage schemas and it defines a scope in which schemas can evolve. It stores a versioned history of all schemas, provides multiple compatibility settings, and allows schemas to evolve according to these compatibility settings. It is also fully-managed.
 For the simplicity of the demo, no Schema Registry is being used. That is not an ideal scenario as the "contract" between Producers and Consumers are "implicitly hard coded" other than being declared through the schema registry
 
-### Stream Catalog:
+#### Stream Catalog:
 Stream catalog in Confluent Cloud centralizes all entities metadata and makes them available for search and discovery using the UI and APIs. Entity types available on the Stream catalog are:
 - Schemas - Schema subject name - Schema record name - Schema field name
 - Topics
 - Connectors
 
-### Stream Lineage:
+#### Stream Lineage:
 Stream lineage provides a graphical UI of event streams and data relationships with both a bird’s eye view and drill-down magnification for answering questions like:
 
 - Where did data come from?
@@ -160,6 +146,22 @@ You will be exploring Stream Lineage and Stream Catalog in more detail as part o
 1. On the right side pane, you will find **Stream Governance Package** grayed out. Click on "Enable Now".
 2. Select **Begin Configuration** under Essentials.
 3. Choose cloud provider and region. You can select the nearest region which has $0/hr to keep the costs low for this workshop. Click on **Enable** at the bottom of the page.
+
+***
+
+## <a name="step-3"></a>Step 3: Create a Cluster
+
+1. Now that you have an environment, let's create a cluster. Select **Create Cluster**.
+    > **Note**: Confluent Cloud clusters are available in 3 types: **Basic**, **Standard**, and **Dedicated**. Basic is intended for development use cases so you should use that for this lab. Basic clusters only support single zone availability. Standard and Dedicated clusters are intended for production use and support Multi-zone deployments. If you’re interested in learning more about the different types of clusters and their associated features and limits, refer to this [documentation](https://docs.confluent.io/current/cloud/clusters/cluster-types.html).
+
+    * Choose the **Basic** cluster type.
+
+    * Click **Begin Configuration**.
+
+    * Choose **AWS/ Azure/ GCP** as your Cloud Provider and your preferred Region.
+        
+    * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
+
 
 ***
 
