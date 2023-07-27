@@ -11,7 +11,7 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 ## **Agenda**
 1. [Log Into Confluent Cloud](#step-1)
 1. [Create an Environment and Cluster](#step-2)
-1. [Create a Schema Registry Instance](#step-3)
+1. [Enable Stream Governance Essentials](#step-3)
 1. [Setup ksqlDB](#step-4)
 1. [Create a Topic using the Cloud UI](#step-5)
 1. [Create an API Key Pair](#step-6)
