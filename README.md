@@ -294,123 +294,98 @@ WITH (
 );
 ```
 
-3. Create another **Stream** by registering the **abc.transactions** topic as a stream called **transactions**
+Streams and tables are the two primary abstractions, they are referred to as collections. There are two ways of creating collections in ksqlDB:
+- directly from Kafka topics (source collections)
+- derived from other streams and tables (derived collections)
 
-```sql
-CREATE STREAM transactions (
-  fullDocument STRUCT<
-    cust_id INT,
-    prod_id INT,
-    txn_ts BIGINT>)
-  WITH (
-    KAFKA_TOPIC='abc.transactions',
-    VALUE_FORMAT='JSON'
-  );
+**Source Collections**: The topics produced/consumed by the microservices need to be ingested by ksqlDB so they can be stream processed:
+```
+CREATE STREAM IF NOT EXISTS PIZZA_ORDERED (
+    order_id VARCHAR KEY,
+    status INT,
+    timestamp BIGINT,
+    order STRUCT<
+        extra_toppings ARRAY<STRING>,
+        username STRING,
+        customer_id STRING,
+        sauce STRING,
+        cheese STRING,
+        main_topping STRING
+    >
+) WITH (
+    KAFKA_TOPIC = 'pizza-ordered',
+    VALUE_FORMAT = 'JSON',
+    TIMESTAMP = 'timestamp'
+);
+
+CREATE STREAM IF NOT EXISTS PIZZA_ASSEMBLED (
+    order_id VARCHAR KEY,
+    status INT,
+    baking_time INT,
+    timestamp BIGINT
+) WITH (
+    KAFKA_TOPIC = 'pizza-assembled',
+    VALUE_FORMAT = 'JSON',
+    TIMESTAMP = 'timestamp'
+);
+
+CREATE STREAM IF NOT EXISTS PIZZA_BAKED (
+    order_id VARCHAR KEY,
+    status INT,
+    timestamp BIGINT
+) WITH (
+    KAFKA_TOPIC = 'pizza-baked',
+    VALUE_FORMAT = 'JSON',
+    TIMESTAMP = 'timestamp'
+);
+
+STREAM_DELIVERED: f"""CREATE STREAM IF NOT EXISTS PIZZA_DELIVERED (
+    order_id VARCHAR KEY,
+    status INT,
+    timestamp BIGINT
+) WITH (
+    KAFKA_TOPIC = 'pizza-delivered',
+    VALUE_FORMAT = 'JSON',
+    TIMESTAMP = 'timestamp'
+);
+
+CREATE STREAM IF NOT EXISTS PIZZA_PENDING (
+    order_id VARCHAR KEY,
+    status INT,
+    timestamp BIGINT
+) WITH (
+    KAFKA_TOPIC = 'pizza-pending',
+    VALUE_FORMAT = 'JSON',
+    TIMESTAMP = 'timestamp'
+);
+
+CREATE STREAM IF NOT EXISTS PIZZA_STATUS (
+    order_id VARCHAR KEY,
+    status INT,
+    timestamp BIGINT
+) WITH (
+    KAFKA_TOPIC='pizza-status',
+    VALUE_FORMAT='JSON',
+    TIMESTAMP='timestamp'
+);
 ```
 
-4. Create another **Stream** by registering the **abc.inventory** topic as a stream called **inventory00**
-
-```SQL
-CREATE STREAM inventory00 (
-  fullDocument STRUCT<
-    product_id INT,
-    name VARCHAR,
-    "list" INT,
-    discount INT,
-    available INT,
-    capacity INT,
-    txn_hour INT>)
-  WITH (
-    KAFKA_TOPIC='abc.inventory',
-    VALUE_FORMAT='JSON'
-  );
-```
-
-5. Create an **inventory Table** based on the **inventory00** stream that you just created
-    * Make sure to set ‘auto.offset.reset’ = ‘earliest’ first
-    * This is a Persistent Query.  A Persistent Query runs indefinitely as it processes rows of events and writes to a new topic. You can create persistent queries by deriving new streams and new tables from existing streams or tables.
-
-```SQL
-CREATE TABLE INVENTORY AS
-  SELECT
-FULLDOCUMENT->PRODUCT_ID AS PRODUCT_ID,
-LATEST_BY_OFFSET(FULLDOCUMENT->NAME) AS NAME,
-LATEST_BY_OFFSET(FULLDOCUMENT->"list") AS LIST_PRICE,
-LATEST_BY_OFFSET(FULLDOCUMENT->DISCOUNT) AS DISCOUNT,
-LATEST_BY_OFFSET(FULLDOCUMENT->AVAILABLE) AS AVAILABLE,
-LATEST_BY_OFFSET(FULLDOCUMENT->CAPACITY) AS CAPACITY,
-LATEST_BY_OFFSET(FULLDOCUMENT->TXN_HOUR) AS TXN_HOUR
-FROM INVENTORY00
-GROUP BY FULLDOCUMENT->PRODUCT_ID;
-```
-
-6. Next, go to the **Tables** tab at the top and click on **INVENTORY**. This provides information on the table, topic (including replication, partitions, and key and value serialization), and schemas.
-
-7. Click on **Query table** which will take you back to the **Editor**. You will see the following query auto-populated in the editor which may be already running by default. If not, click on **Run query**. An option is to set the ‘auto.offset.reset=earliest’ before clicking **Run query**.
-
-Optionally, you can navigate to the editor and construct the select statement on your own, which should look like the following:
-
-```SQL
-SELECT * FROM INVENTORY EMIT CHANGES;
-```
-
-8. You should see the following data within your **INVENTORY** table.
-
-9. Stop the query by clicking **Stop**
 
 
 ***
 
 ## <a name="step-10"></a>Step 10: Stream Processing with ksqlDB
 
-1. Create a **PRODUCT_TXN_PER_HOUR** table based on the **INVENTORY** table and **TRANSACTIONS** stream.  Make sure to first set 'auto.offset.reset' = 'earliest' before running the query.
 
-```SQL
-CREATE TABLE PRODUCT_TXN_PER_HOUR WITH (FORMAT='AVRO') AS
-SELECT T.FULLDOCUMENT->PROD_ID,
-       COUNT(*) AS TXN_PER_HOUR,
-       MAX(I.TXN_HOUR) AS EXPECTED_TXN_PER_HOUR,
-       (CAST(MAX(I.AVAILABLE) AS DOUBLE)/ CAST(MAX(I.CAPACITY) AS DOUBLE))*100 AS STOCK_LEVEL, I.NAME AS PRODUCT_NAME
-FROM  TRANSACTIONS T
-      LEFT JOIN INVENTORY I
-      ON T.FULLDOCUMENT->PROD_ID = I.PRODUCT_ID
-WINDOW HOPPING (SIZE 1 HOUR, ADVANCE BY 5 MINUTES)
-GROUP BY T.FULLDOCUMENT->PROD_ID,
-         I.NAME;
+**Derived Collections**: With the source collections created (streams) we can now extract the status field of each event and have them merged into a single topic/stream by creating persistent queries:
+```
+INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_ORDERED EMIT CHANGES;
+INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_ASSEMBLED EMIT CHANGES;
+INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_BAKED EMIT CHANGES;
+INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_DELIVERED EMIT CHANGES;
+INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_PENDING EMIT CHANGES;
 ```
 
-2. Create a stream on the underlying topic backing the **PRODUCT_TXN_PER_HOUR** table that you just created
-    * Determine the name of the backing topic by navigating to the **Topics** tab on the left hand side menu under **Cluster**.  You should see a topic that begins with **pksqlc-**… and ends with **PRODUCT_TXN_PER_HOUR**. Click on this topic and copy down this topic name as it will be required for the following query
-    * Create the stream based on the backing topic for PRODUCT_TXN_PER_HOUR table
-
-```SQL
-CREATE STREAM PRODUCT_TXN_PER_HOUR_STREAM WITH (KAFKA_TOPIC='pksqlc-...PRODUCT_TXN_PER_HOUR', FORMAT='AVRO');
-```
-
-3. Now you want to perform a query to see which products you should create promotions for based on the following criteria
-    * High inventory level (>80% of capacity)
-    * Low transactions (< expected transactions/hour)
-
-```SQL
-CREATE STREAM ABC_PROMOTIONS AS
-SELECT  ROWKEY,
-        TIMESTAMPTOSTRING(ROWTIME,'yyyy-MM-dd HH:mm:ss','Europe/London') AS TS,
-        AS_VALUE(ROWKEY -> PROD_ID) AS PROD_ID ,
-        ROWKEY -> PRODUCT_NAME AS PRODUCT_NAME,
-        STOCK_LEVEL ,
-        TXN_PER_HOUR ,
-        EXPECTED_TXN_PER_HOUR
-   FROM PRODUCT_TXN_PER_HOUR_STREAM
-WHERE TXN_PER_HOUR < EXPECTED_TXN_PER_HOUR
-  AND  STOCK_LEVEL > 80
-  ;
-```
-
-4. Query the results.  Make sure to set ‘auto.offset.reset=earliest’
-
-```SQL
-SELECT * FROM ABC_PROMOTIONS EMIT CHANGES;
-```
 
 ***
 
@@ -478,9 +453,12 @@ Here are some links to check out if you are interested in further testing:
 * Confluent Cloud ksqlDB [Quickstart](https://docs.confluent.io/cloud/current/get-started/ksql.html)
 
 * Confluent Cloud [Demos/Examples](https://docs.confluent.io/platform/current/tutorials/examples/ccloud/docs/ccloud-demos-overview.html)
-* 
 
-### Using the webapp and of chronology of events
+*  ksqlDB [Tutorials](https://kafka-tutorials.confluent.io/)
+
+* Full repository of Connectors within [Confluent Hub](https://www.confluent.io/hub/)
+
+### Using the webapp and chronology of events
 1. After starting all scripts and accessing the landing page (http://127.0.0.1:8000), customise your pizza and submit your order:
 ![image](static/images/docs/webapp_menu.png)
 
@@ -574,7 +552,5 @@ As that microservice is subscribed to two different topics, Apache Kafka cannot 
 The microservice **Process Status** is also stateful as it receives several notifications for the same event key. If that service was to be handled as stateless it would be a problem if a given order is not fully processed, for example, what if the baker decided to call it a day? The status of the order would get stuck forever as "Your pizza is in the oven". For example, it could be estimated the orders shouldn't take more than 'X minutes' between being ordered and baked and 'Y minutes' between being baked and not completed yet, creating then a SLA in between microservices, if that gets violated it could trigger a notification to state something got stuck (at least the pizza shop manager would get notified before the customer call to complain about the delay).<br><br>
 What that microservice does is to spaw a new thread with an infinite loop to check the status of all orders in progress for every few seconds, like a watchdog.
 
+Hope you enjoyed the Workshop :-) Thanks!
 
-* ksqlDB [Tutorials](https://kafka-tutorials.confluent.io/)
-
-* Full repository of Connectors within [Confluent Hub](https://www.confluent.io/hub/)
