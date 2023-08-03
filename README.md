@@ -478,6 +478,102 @@ Here are some links to check out if you are interested in further testing:
 * Confluent Cloud ksqlDB [Quickstart](https://docs.confluent.io/cloud/current/get-started/ksql.html)
 
 * Confluent Cloud [Demos/Examples](https://docs.confluent.io/platform/current/tutorials/examples/ccloud/docs/ccloud-demos-overview.html)
+* 
+
+### Using the webapp and of chronology of events
+1. After starting all scripts and accessing the landing page (http://127.0.0.1:8000), customise your pizza and submit your order:
+![image](static/images/docs/webapp_menu.png)
+
+2. Once the order is submitted the webapp will produce an event to the Kafka topic ```pizza-ordered```:
+```
+(webapp) INFO 21:00:39.603 - Event successfully produced
+ - Topic 'pizza-ordered', Partition #5, Offset #18
+ - Key: b32ad
+ - Value: {"status": 100, "timestamp": 1676235639159, "order": {"extra_toppings": ["Mushroom", "Black olives", "Green pepper"], "customer_id": "d94a6c43d9f487c1bef659f05c002213", "name": "Italo", "sauce": "Tomato", "cheese": "Mozzarella", "main_topping": "Pepperoni"}}
+ ```
+
+3. The webapp will display the confirmation of the order:
+![image](static/images/docs/webapp_order_confirmation.png)
+
+4. The microservice **Deliver Pizza** (step 1/2) receives early warning about a new order by subscribing to topic ```pizza-ordered```. In a real life scenario it would get the ```customer_id``` data and query its data store (e.g., ksqlDB/Flink) and fetch the delivery address:
+```
+(msvc_delivery) INFO 21:00:18.516 - Subscribed to topic(s): pizza-ordered, pizza-baked
+(msvc_delivery) INFO 21:00:39.609 - Early warning to deliver order 'b32ad' to customer_id 'd94a6c43d9f487c1bef659f05c002213'
+```
+
+5. The microservice **Assemble Pizza**, which is subscribed to the topic ```pizza-ordered```, receives the order and starts assembling the pizza. It will also estimate the baking time based on the ingredients chosen. Once the pizza is assembled, it will produce an event to the topic ```pizza-assembled``` as well as another to the topic ```pizza-status```:
+```
+(msvc_assemble) INFO 21:00:08.500 - Subscribed to topic(s): pizza-ordered
+(msvc_assemble) INFO 21:00:39.604 - Preparing order 'b32ad', assembling time is 4 second(s)
+(msvc_assemble) INFO 21:00:43.608 - Order 'b32ad' is assembled!
+(msvc_assemble) INFO 21:00:43.923 - Event successfully produced
+ - Topic 'pizza-assembled', Partition #5, Offset #15
+ - Key: b32ad
+ - Value: {"baking_time": 17}
+(msvc_assemble) INFO 21:00:44.847 - Event successfully produced
+ - Topic 'pizza-status', Partition #5, Offset #45
+ - Key: b32ad
+ - Value: {"status": 200}
+ ```
+
+6. The microservice **Process Status**, which is subscribed to the topic ```pizza-status```, receives the status change event and update the database with a materialised view of the status of the order:
+```
+(msvc_status) INFO 21:00:12.579 - Subscribed to topic(s): pizza-status
+(msvc_status) INFO 21:00:44.851 - Order 'b32ad' status updated: Your pizza is in the oven (200)
+ ```
+
+7. The microservice **Bake Pizza**, which is subscribed to the topic ```pizza-assembled```, receives the notification the pizza is assembled along with the baking time, then it bakes the pizza accordingly. Once the pizza is baked, it will produce an event to the topic ```pizza-baked``` as well as another to the topic ```pizza-status```:
+```
+(msvc_bake) INFO 21:00:15.319 - Subscribed to topic(s): pizza-assembled
+(msvc_bake) INFO 21:00:43.927 - Preparing order 'b32ad', baking time is 17 second(s)
+(msvc_bake) INFO 21:01:00.929 - Order 'b32ad' is baked!
+(msvc_bake) INFO 21:01:01.661 - Event successfully produced
+ - Topic 'pizza-baked', Partition #5, Offset #15
+ - Key: b32ad
+ - Value:
+(msvc_bake) INFO 21:01:02.645 - Event successfully produced
+ - Topic 'pizza-status', Partition #5, Offset #46
+ - Key: b32ad
+ - Value: {"status": 300}
+```
+
+8. The microservice **Process Status**, which is subscribed to the topic ```pizza-status```, receives the status change event and update the database with a materialised view of the status of the order:
+```
+(msvc_status) INFO 21:00:12.579 - Subscribed to topic(s): pizza-status
+(msvc_status) INFO 21:01:02.647 - Order 'b32ad' status updated: Your pizza is out for delivery (300)
+ ```
+
+9. The microservice **Deliver Pizza** (step 2/2), which is subscribed to the topic ```pizza-baked```, receives the notification the pizza is baked, then it delivers the pizza. It already had time to plan the delivery as it got an early warning as soon as the order was placed. Once the pizza is delivered, it will produce an event to the topic ```pizza-status```:
+```
+(msvc_delivery) INFO 21:00:18.516 - Subscribed to topic(s): pizza-ordered, pizza-baked
+(msvc_delivery) INFO 21:01:01.662 - Deliverying order 'b32ad' for customer_id 'd94a6c43d9f487c1bef659f05c002213', delivery time is 10 second(s)
+(msvc_delivery) INFO 21:01:11.665 - Order 'b32ad' delivered to customer_id 'd94a6c43d9f487c1bef659f05c002213'
+(msvc_delivery) INFO 21:01:12.899 - Event successfully produced
+ - Topic 'pizza-status', Partition #5, Offset #47
+ - Key: b32ad
+ - Value: {"status": 400}
+```
+
+10. The microservice **Process Status**, which is subscribed to the topic ```pizza-status```, receives the status change event and update the database with a materialised view of the status of the order:
+```
+(msvc_status) INFO 21:00:12.579 - Subscribed to topic(s): pizza-status
+(msvc_status) INFO 21:01:12.902 - Order 'b32ad' status updated: Your pizza was delivered (400)
+```
+
+11. The flow is completed and, hopefully, we now have a happy customer for getting a delicious and nutricious pizza in such fast manner. The webapp, if on the order status page (in this case http://127.0.0.1:8000/orders/b32ad) will display in real time the status of the pizza, all of that thanks to the CQRS pattern. In a real life scenario that could be easily achieved by using frameworks such as ReactJS, however in this project it is used JQuery/AJAX async calls to accomplish that:
+![image](static/images/docs/webapp_order_delivered.png)
+
+#### **IMPORTANT 1**
+Have you noticed the microservice **Deliver Pizza** is stateful as it has two steps?
+- Step 1/2: Receive early warning that an order was placed (topic ```pizza-ordered```)
+- Step 2/2: Receive notification the pizza is baked (topic ```pizza-baked```)
+
+As that microservice is subscribed to two different topics, Apache Kafka cannot guarantee the order of events for the same event key. Hang on, but won't the early notification always arrive before the notification the pizza is baked (see the architecture diagram above)? The answer to that is: usually yes, as the first step happens before the second one, however what if for some reason the microservice **Deliver Pizza** is down and a bunch of events get pushed through the topics? When the microservice is brought up it will consume the events from the two topics and not necessarily in the same chronological order (for the same event key). For that reason microservice like that needs to take into account this kind of situations. On this project, if that happens the customer would first get the status "Bear with us we are checking your order, it won’t take long" (once the pizza is baked notification is processed), then would get the status "Your pizza was delivered" (once the early warning notification is processed).
+
+#### **IMPORTANT 2**
+The microservice **Process Status** is also stateful as it receives several notifications for the same event key. If that service was to be handled as stateless it would be a problem if a given order is not fully processed, for example, what if the baker decided to call it a day? The status of the order would get stuck forever as "Your pizza is in the oven". For example, it could be estimated the orders shouldn't take more than 'X minutes' between being ordered and baked and 'Y minutes' between being baked and not completed yet, creating then a SLA in between microservices, if that gets violated it could trigger a notification to state something got stuck (at least the pizza shop manager would get notified before the customer call to complain about the delay).<br><br>
+What that microservice does is to spaw a new thread with an infinite loop to check the status of all orders in progress for every few seconds, like a watchdog.
+
 
 * ksqlDB [Tutorials](https://kafka-tutorials.confluent.io/)
 
