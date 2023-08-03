@@ -10,15 +10,15 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 
 ## **Agenda**
 1. [Log Into Confluent Cloud](#step-1)
-1. [Create an Environment and Cluster](#step-2)
-1. [Enable Stream Governance Essentials](#step-3)
+1. [Create an Environment and Enable Stream Governance Essentials](#step-2)
+1. [Create a Cluster](#step-3)
 1. [Setup ksqlDB](#step-4)
 1. [Create an API Key Pair](#step-5)
 1. [Prepare the config files and pre-requisites](#step-6)
 1. [Cloud Dashboard Walkthrough](#step-8)
 1. [Create Streams and Tables using ksqlDB](#step-9)
 1. [Stream Processing with ksqlDB](#step-10)
-1. [Connect BigQuery sink to Confluent Cloud](#step-11)
+1. [Stop the Demo](#step-11)
 1. [Clean Up Resources](#step-11)
 1. [Confluent Resources and Further Testing](#confluent-resources-and-further-testing)
 
@@ -414,39 +414,39 @@ SELECT * FROM ABC_PROMOTIONS EMIT CHANGES;
 
 ***
 
-## <a name="step-11"></a>Step 11: Connect BigQuery sink to Confluent Cloud
+## <a name="step-11"></a>Step 11: Stop the Demo
 
-The next step is to sink data from Confluent Cloud into BigQuery using the [fully-managed BigQuery Sink connector](https://docs.confluent.io/cloud/current/connectors/cc-gcp-bigquery-sink.html). The connector will send real time data on promotions into BigQuery.
 
-1. First, you will create the connector that will automatically create a BigQuery table and populate that table with the data from the promotions topic within Confluent Cloud. From the Confluent Cloud UI, click on the Connectors tab on the navigation menu and select **+Add connector**. Search and click on the BigQuery Sink icon.
+1. To stop the demo:
+  - To stop all services at once: ```./stop_demo.sh```
 
-2. Enter the following configuration details. The remaining fields can be left blank.
+### Graceful shutdown
+One very important element of any Kafka consumer is by handling OS signals to be able to perform a graceful shutdown. Any consumer in a consumer group should inform the cluster it is leaving so it can rebalance itself other than wait for a timeout. All microservices used in this project have a graceful shutdown procedure in place, example:
 
-<div align="center">
+```
+(msvc_status) INFO 21:46:53.338 - Starting graceful shutdown...
+(msvc_status) INFO 21:46:53.338 - Closing consumer in consumer group...
+(msvc_status) INFO 21:46:53.372 - Consumer in consumer group successfully closed
+(msvc_status) INFO 21:46:53.372 - Graceful shutdown completed
 
-| Setting            | Value                        |
-|------------------------|-----------------------------------------|
-| `Topics`      | pksqlc-...ABC_PROMOTIONS |
-| `Name`              | BigQuerySinkConnector                 |
-| `Input message format`           | Avro            |
-| `Kafka API Key`    | From step 6           |
-| `Kafka API Secret` | From step 6              |
-| `GCP credentials file`    | [JSON file link](https://drive.google.com/drive/folders/1EOYZkyWvpnCydBCv2hv8DMH8FlZKuXKV)            |
-| `Project ID`    | Will be provided during workshop          |
-| `Dataset`    | Will be provided during workshop          |
-| `Auto create tables`    | True          |
-| `Tasks`    | 1             |
+(msvc_assemble) INFO 21:46:54.541 - Starting graceful shutdown...
+(msvc_assemble) INFO 21:46:54.541 - Closing consumer in consumer group...
+(msvc_assemble) INFO 21:46:54.577 - Consumer in consumer group successfully closed
+(msvc_assemble) INFO 21:46:54.577 - Graceful shutdown completed
 
-</div>
+(msvc_bake) INFO 21:46:55.968 - Starting graceful shutdown...
+(msvc_bake) INFO 21:46:55.968 - Closing consumer in consumer group...
+(msvc_bake) INFO 21:46:55.995 - Consumer in consumer group successfully closed
+(msvc_bake) INFO 21:46:55.996 - Graceful shutdown completed
 
-3. Click on **Next**.
+(msvc_delivery) INFO 21:46:57.311 - Starting graceful shutdown...
+(msvc_delivery) INFO 21:46:57.311 - Closing consumer in consumer group...
+(msvc_delivery) INFO 21:46:57.341 - Consumer in consumer group successfully closed
+(msvc_delivery) INFO 21:46:57.341 - Graceful shutdown completed
+```
 
-4. Before launching the connector, you will be brought to the summary page.  Once you have reviewed the configs and everything looks good, select **Launch**.
 
-5. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
-
-6. Shortly after, the workshop instructor will switch over to the BigQuery page within Google Console to show that a table matching the topic name you used when creating the BigQuery connector in Confluent Cloud has been created within the **workshop** dataset.  Clicking the table name should open a BigQuery editor for it:
-
+2. Deactivate the virtual environment: ```deactivate```
 
 
 ***
