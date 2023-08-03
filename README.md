@@ -370,13 +370,6 @@ CREATE STREAM IF NOT EXISTS PIZZA_STATUS (
 );
 ```
 
-
-
-***
-
-## <a name="step-10"></a>Step 10: Stream Processing with ksqlDB
-
-
 **Derived Collections**: With the source collections created (streams) we can now extract the status field of each event and have them merged into a single topic/stream by creating persistent queries:
 ```
 INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_ORDERED EMIT CHANGES;
@@ -389,77 +382,10 @@ INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_PENDING E
 
 ***
 
-## <a name="step-11"></a>Step 11: Stop the Demo
+## <a name="step-10"></a>Step 10: Using the webapp and chronology of events
 
 
-1. To stop the demo:
-  - To stop all services at once: ```./stop_demo.sh```
-
-### Graceful shutdown
-One very important element of any Kafka consumer is by handling OS signals to be able to perform a graceful shutdown. Any consumer in a consumer group should inform the cluster it is leaving so it can rebalance itself other than wait for a timeout. All microservices used in this project have a graceful shutdown procedure in place, example:
-
-```
-(msvc_status) INFO 21:46:53.338 - Starting graceful shutdown...
-(msvc_status) INFO 21:46:53.338 - Closing consumer in consumer group...
-(msvc_status) INFO 21:46:53.372 - Consumer in consumer group successfully closed
-(msvc_status) INFO 21:46:53.372 - Graceful shutdown completed
-
-(msvc_assemble) INFO 21:46:54.541 - Starting graceful shutdown...
-(msvc_assemble) INFO 21:46:54.541 - Closing consumer in consumer group...
-(msvc_assemble) INFO 21:46:54.577 - Consumer in consumer group successfully closed
-(msvc_assemble) INFO 21:46:54.577 - Graceful shutdown completed
-
-(msvc_bake) INFO 21:46:55.968 - Starting graceful shutdown...
-(msvc_bake) INFO 21:46:55.968 - Closing consumer in consumer group...
-(msvc_bake) INFO 21:46:55.995 - Consumer in consumer group successfully closed
-(msvc_bake) INFO 21:46:55.996 - Graceful shutdown completed
-
-(msvc_delivery) INFO 21:46:57.311 - Starting graceful shutdown...
-(msvc_delivery) INFO 21:46:57.311 - Closing consumer in consumer group...
-(msvc_delivery) INFO 21:46:57.341 - Consumer in consumer group successfully closed
-(msvc_delivery) INFO 21:46:57.341 - Graceful shutdown completed
-```
-
-
-2. Deactivate the virtual environment: ```deactivate```
-
-
-***
-
-## <a name="step-12"></a>Step 12: Clean Up Resources
-
-Deleting the resources you created during this workshop will prevent you from incurring additional charges.
-
-1. The first item to delete is the ksqlDB application. Select the Delete button under Actions and enter the Application Name to confirm the deletion.
-
-2. Delete the BigQuery sink connector by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
-
-3. Delete the mongoDB Atlas source connector by navigating to **Connectors** under Cluster in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
-
-4. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
-
- 5. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
-
-***
-
-## <a name="confluent-resources-and-further-testing"></a>Confluent Resources and Further Testing
-
-Here are some links to check out if you are interested in further testing:
-
-* Confluent Cloud [Basics](https://docs.confluent.io/cloud/current/client-apps/cloud-basics.html)
-
-* [Quickstart](https://docs.confluent.io/cloud/current/get-started/index.html) with Confluent Cloud
-
-* Confluent Cloud ksqlDB [Quickstart](https://docs.confluent.io/cloud/current/get-started/ksql.html)
-
-* Confluent Cloud [Demos/Examples](https://docs.confluent.io/platform/current/tutorials/examples/ccloud/docs/ccloud-demos-overview.html)
-
-*  ksqlDB [Tutorials](https://kafka-tutorials.confluent.io/)
-
-* Full repository of Connectors within [Confluent Hub](https://www.confluent.io/hub/)
-
-### Using the webapp and chronology of events
-1. After starting all scripts and accessing the landing page (http://127.0.0.1:8000), customise your pizza and submit your order:
+1. After starting all scripts and access the landing page (http://127.0.0.1:8000), customise your pizza and submit your order:
 ![image](static/images/docs/webapp_menu.png)
 
 2. Once the order is submitted the webapp will produce an event to the Kafka topic ```pizza-ordered```:
@@ -540,6 +466,81 @@ Here are some links to check out if you are interested in further testing:
 
 11. The flow is completed and, hopefully, we now have a happy customer for getting a delicious and nutricious pizza in such fast manner. The webapp, if on the order status page (in this case http://127.0.0.1:8000/orders/b32ad) will display in real time the status of the pizza, all of that thanks to the CQRS pattern. In a real life scenario that could be easily achieved by using frameworks such as ReactJS, however in this project it is used JQuery/AJAX async calls to accomplish that:
 ![image](static/images/docs/webapp_order_delivered.png)
+
+
+***
+
+## <a name="step-11"></a>Step 11: Stop the Demo
+
+
+1. To stop the demo:
+  - To stop all services at once: ```./stop_demo.sh```
+
+### Graceful shutdown
+One very important element of any Kafka consumer is by handling OS signals to be able to perform a graceful shutdown. Any consumer in a consumer group should inform the cluster it is leaving so it can rebalance itself other than wait for a timeout. All microservices used in this project have a graceful shutdown procedure in place, example:
+
+```
+(msvc_status) INFO 21:46:53.338 - Starting graceful shutdown...
+(msvc_status) INFO 21:46:53.338 - Closing consumer in consumer group...
+(msvc_status) INFO 21:46:53.372 - Consumer in consumer group successfully closed
+(msvc_status) INFO 21:46:53.372 - Graceful shutdown completed
+
+(msvc_assemble) INFO 21:46:54.541 - Starting graceful shutdown...
+(msvc_assemble) INFO 21:46:54.541 - Closing consumer in consumer group...
+(msvc_assemble) INFO 21:46:54.577 - Consumer in consumer group successfully closed
+(msvc_assemble) INFO 21:46:54.577 - Graceful shutdown completed
+
+(msvc_bake) INFO 21:46:55.968 - Starting graceful shutdown...
+(msvc_bake) INFO 21:46:55.968 - Closing consumer in consumer group...
+(msvc_bake) INFO 21:46:55.995 - Consumer in consumer group successfully closed
+(msvc_bake) INFO 21:46:55.996 - Graceful shutdown completed
+
+(msvc_delivery) INFO 21:46:57.311 - Starting graceful shutdown...
+(msvc_delivery) INFO 21:46:57.311 - Closing consumer in consumer group...
+(msvc_delivery) INFO 21:46:57.341 - Consumer in consumer group successfully closed
+(msvc_delivery) INFO 21:46:57.341 - Graceful shutdown completed
+```
+
+
+2. Deactivate the virtual environment: ```deactivate```
+
+
+***
+
+## <a name="step-12"></a>Step 12: Clean Up Resources
+
+Deleting the resources you created during this workshop will prevent you from incurring additional charges.
+
+1. The first item to delete is the ksqlDB application. Select the Delete button under Actions and enter the Application Name to confirm the deletion.
+
+2. Delete the BigQuery sink connector by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
+
+3. Delete the mongoDB Atlas source connector by navigating to **Connectors** under Cluster in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
+
+4. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
+
+ 5. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
+
+***
+
+## <a name="confluent-resources-and-further-testing"></a>Confluent Resources and Further Testing
+
+Here are some links to check out if you are interested in further testing:
+
+* Confluent Cloud [Basics](https://docs.confluent.io/cloud/current/client-apps/cloud-basics.html)
+
+* [Quickstart](https://docs.confluent.io/cloud/current/get-started/index.html) with Confluent Cloud
+
+* Confluent Cloud ksqlDB [Quickstart](https://docs.confluent.io/cloud/current/get-started/ksql.html)
+
+* Confluent Cloud [Demos/Examples](https://docs.confluent.io/platform/current/tutorials/examples/ccloud/docs/ccloud-demos-overview.html)
+
+*  ksqlDB [Tutorials](https://kafka-tutorials.confluent.io/)
+
+* Full repository of Connectors within [Confluent Hub](https://www.confluent.io/hub/)
+
+***
+
 
 #### **IMPORTANT 1**
 Have you noticed the microservice **Deliver Pizza** is stateful as it has two steps?
