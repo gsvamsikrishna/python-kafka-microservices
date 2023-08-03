@@ -271,33 +271,13 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 
 To write streaming queries against topics, you will need to register the topics with ksqlDB as a stream and/or table.
 
-2. First, create a **Stream** by registering the **abc.clicks** topic as a stream called **clicks**
-
-    * Insert the following query into the ksqlDB editor and click ‘**Run query**’ to execute
-
-```SQL
-CREATE STREAM clicks(
-    ip VARCHAR,
-    userid INT,
-    prod_id INT,
-    bytes BIGINT,
-    referrer VARCHAR,
-    agent VARCHAR,
-    click_ts BIGINT
-    )
-WITH (
-    KAFKA_TOPIC='abc.clicks',
-    VALUE_FORMAT='JSON',
-    TIMESTAMP='click_ts'
-);
-```
-
-Streams and tables are the two primary abstractions, they are referred to as collections. There are two ways of creating collections in ksqlDB:
+2. Streams and tables are the two primary abstractions, they are referred to as collections. There are two ways of creating collections in ksqlDB:
 - directly from Kafka topics (source collections)
 - derived from other streams and tables (derived collections)
 
+  *Insert the following queries into the ksqlDB editor and click ‘**Run query**’ to execute
 **Source Collections**: The topics produced/consumed by the microservices need to be ingested by ksqlDB so they can be stream processed:
-```
+```SQL
 CREATE STREAM IF NOT EXISTS PIZZA_ORDERED (
     order_id VARCHAR KEY,
     status INT,
@@ -315,7 +295,9 @@ CREATE STREAM IF NOT EXISTS PIZZA_ORDERED (
     VALUE_FORMAT = 'JSON',
     TIMESTAMP = 'timestamp'
 );
+```
 
+```SQL
 CREATE STREAM IF NOT EXISTS PIZZA_ASSEMBLED (
     order_id VARCHAR KEY,
     status INT,
@@ -326,7 +308,9 @@ CREATE STREAM IF NOT EXISTS PIZZA_ASSEMBLED (
     VALUE_FORMAT = 'JSON',
     TIMESTAMP = 'timestamp'
 );
+```
 
+```SQL
 CREATE STREAM IF NOT EXISTS PIZZA_BAKED (
     order_id VARCHAR KEY,
     status INT,
@@ -336,7 +320,9 @@ CREATE STREAM IF NOT EXISTS PIZZA_BAKED (
     VALUE_FORMAT = 'JSON',
     TIMESTAMP = 'timestamp'
 );
+```
 
+```SQL
 STREAM_DELIVERED: f"""CREATE STREAM IF NOT EXISTS PIZZA_DELIVERED (
     order_id VARCHAR KEY,
     status INT,
@@ -346,7 +332,9 @@ STREAM_DELIVERED: f"""CREATE STREAM IF NOT EXISTS PIZZA_DELIVERED (
     VALUE_FORMAT = 'JSON',
     TIMESTAMP = 'timestamp'
 );
+```
 
+```SQL
 CREATE STREAM IF NOT EXISTS PIZZA_PENDING (
     order_id VARCHAR KEY,
     status INT,
@@ -356,7 +344,9 @@ CREATE STREAM IF NOT EXISTS PIZZA_PENDING (
     VALUE_FORMAT = 'JSON',
     TIMESTAMP = 'timestamp'
 );
+```
 
+```SQL
 CREATE STREAM IF NOT EXISTS PIZZA_STATUS (
     order_id VARCHAR KEY,
     status INT,
