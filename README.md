@@ -16,8 +16,8 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 1. [Create an API Key Pair](#step-5)
 1. [Prepare the config files and pre-requisites](#step-6)
 1. [Cloud Dashboard Walkthrough](#step-8)
-1. [Create Streams and Tables using ksqlDB](#step-9)
-1. [Stream Processing with ksqlDB](#step-10)
+1. [Create Streams and Stream Processing ksqlDB](#step-9)
+1. [Using the webapp and chronology of events](#step-10)
 1. [Stop the Demo](#step-11)
 1. [Clean Up Resources](#step-11)
 1. [Confluent Resources and Further Testing](#confluent-resources-and-further-testing)
@@ -259,9 +259,7 @@ This section will be conducted by the workshop instructor.  You can find additio
 
 ***
 
-# <div align="center">-------------WIP--------------</div>
-
-## <a name="step-9"></a>Step 9: Create Streams and Tables using ksqlDB
+## <a name="step-9"></a>Step 9: Create Streams and Stream Processing ksqlDB
 
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
