@@ -14,7 +14,7 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 1. [Enable Stream Governance Essentials](#step-3)
 1. [Setup ksqlDB](#step-4)
 1. [Create an API Key Pair](#step-5)
-1. [Connect mongoDB Atlas source to Confluent Cloud](#step-7)
+1. [Prepare the config files and pre-requisites](#step-6)
 1. [Cloud Dashboard Walkthrough](#step-8)
 1. [Create Streams and Tables using ksqlDB](#step-9)
 1. [Stream Processing with ksqlDB](#step-10)
@@ -72,6 +72,8 @@ This workshop will be utilizing kafka cluster and ksqlDB running on Confluent Cl
     * Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”. New signups receive $400 to spend during their first 30 days. No credit card required.
 
     > **Note:** You will create resources during this workshop that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the workshop. More details on the specifics can be found [here](https://www.confluent.io/confluent-cloud/tryfree/).
+
+From the system/ laptop/ instance where micro-services are planned to run, setup the following
 
 1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
     * portquiz.net:443
@@ -165,6 +167,7 @@ In case, if you navigated away and want to use an existing environment, You can 
         
     * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
 
+2. Once the cluster is ready to use, you will be on the "Cluster Overview" page. On the left side pane, click on **Cluster Settings** under **Cluster Overview**. Note down the Bootstrap server details for use in later steps.
 
 ***
 
@@ -210,41 +213,30 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 1. After creating and saving the API key, you will see this API key in the Confluent Cloud UI in the **API keys** tab. If you don’t see the API key populate right away, refresh the browser.
 
+1. Note down the API Key and Secret for use in later steps.
+
 ***
 # <div align="center">-------------WIP--------------</div>
 
-## <a name="step-7"></a>Step 7: Connect mongoDB Atlas to Confluent Cloud
+## <a name="step-6"></a>Step 6: Prepare the config files and pre-requisites
 
-The next step is to source data from mongoDB using the [fully-managed mongoDB Atlas Source connector] (https://docs.confluent.io/cloud/current/connectors/cc-mongo-db-source.html). The connector will send real time data on clicks, inventory, and transactions to Confluent Cloud.
+On the system/laptop/instance where the micro-services are expected to run
 
-1. First, you will create the connector that will send data to clicks, inventory, and transactions topics. From the Confluent Cloud UI, click on the **Connectors** tab on the navigation menu. Search and click on the **mongoDB Atlas Source** icon.
+- Go to the folder where the repo was cloned: ```cd python-kafka-microservices```
+- Create a virtual environment: ```python3 -m venv _venv```
+- Activate the virtual environment: ```source _venv/bin/activate```
+- Install project requirements: ```python3 -m pip install -r requirements.txt```
 
-1. Enter the following configuration details. The remaining fields can be left blank.
-
-<div align="center">
-
-| Setting            | Value                        |
-|------------------------|-----------------------------------------|
-| `Name`      | MongoDbAtlasSourceConnector |
-| `Kafka API Key`              | From step 6                 |
-| `Kafka API Secret`           | From step 6              |
-| `Connection host`    | Will be provided during workshop            |
-| `Connection user` | dbUser               |
-| `Connection password`    | MONGODB_PW             |
-| `Database name`    | abc           |
-| `Copy existing data`    | True             |
-| `Output message format`    | JSON           |
-| `Tasks`    | 1             |
-
-</div>
-
-3. Click on **Next**.
-
-1. Before launching the connector, you will be brought to the summary page.  Once you have reviewed the configs and everything looks good, select **Launch**.
-
-1. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
-
-1. If you navigate back to the **Topics** tab you will notice two newly created topics **abc.transactions** and **abc.clicks**.  The connector automatically created these two additional topics based on the collections in the mongoDB Atlas database where data is being sourced from.
+- ```{KAFKA_CONFIG_FILE}``` is a Kafka configuration file containing the properties to access the Apache Kafka cluster, this file must be located under the folder ```config_kafka/``` (see file ```config_kafka/example.ini``` for reference):
+    - Use the details captured in earlier steps to fill in the details
+```
+    [kafka]
+    bootstrap.servers = {{ host:port }}
+    security.protocol = SASL_SSL
+    sasl.mechanisms = PLAIN
+    sasl.username = {{ CLUSTER_API_KEY }}
+    sasl.password = {{ CLUSTER_API_SECRET }}
+```
 
 ***
 
