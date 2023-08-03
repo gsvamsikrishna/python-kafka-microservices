@@ -216,7 +216,6 @@ In case, if you navigated away and want to use an existing environment, You can 
 1. Note down the API Key and Secret for use in later steps.
 
 ***
-# <div align="center">-------------WIP--------------</div>
 
 ## <a name="step-6"></a>Step 6: Prepare the config files and pre-requisites
 
@@ -240,11 +239,27 @@ On the system/laptop/instance where the micro-services are expected to run
 
 ***
 
+## <a name="step-7"></a>Step 7: Run the Microservices
+
+1. Run script to create topics*/ksqlDB streams: ```python3 run_me_first.py {KAFKA_CONFIG_FILE} {SYS_CONFIG_FILE}```
+- If files names were not changes run ```python3 run_me_first.py example.ini default.ini```
+
+2. Start the demo (all in a single terminal): ```./start_demo.sh {KAFKA_CONFIG_FILE} {SYS_CONFIG_FILE}```
+- If files names were not changes run ```./start_demo.sh example.ini default.ini```
+
+3. Open your browser and navigate to http://127.0.0.1:8000
+
+>**Note:** In a real life scenario each microservice (consumer in a consumer group) could be instantiated for as many times as there are partitions to the topic, however that is just for demo/learning purposes, only one instance will be spawn. Also, for the simplicity of the demo, no Schema Registry is being used. That is not an ideal scenario as the "contract" between Producers and Consumers are "implicitly hard coded" other than being declared through the schema registry
+
+***
+
 ## <a name="step-8"></a>Step 8: Cloud Dashboard Walkthrough
 
 This section will be conducted by the workshop instructor.  You can find additional information on the Cloud Dashboard [here](https://docs.confluent.io/cloud/current/overview.html) and [here](https://docs.confluent.io/cloud/current/client-apps/cloud-basics.html).
 
 ***
+
+# <div align="center">-------------WIP--------------</div>
 
 ## <a name="step-9"></a>Step 9: Create Streams and Tables using ksqlDB
 
