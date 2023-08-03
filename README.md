@@ -13,8 +13,7 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 1. [Create an Environment and Cluster](#step-2)
 1. [Enable Stream Governance Essentials](#step-3)
 1. [Setup ksqlDB](#step-4)
-1. [Create a Topic using the Cloud UI](#step-5)
-1. [Create an API Key Pair](#step-6)
+1. [Create an API Key Pair](#step-5)
 1. [Connect mongoDB Atlas source to Confluent Cloud](#step-7)
 1. [Cloud Dashboard Walkthrough](#step-8)
 1. [Create Streams and Tables using ksqlDB](#step-9)
@@ -181,8 +180,7 @@ In case, if you navigated away and want to use an existing environment, You can 
 > **Note:** A streaming unit, also known as a Confluent Streaming Unit (CSU), is the unit of pricing for Confluent Cloud ksqlDB. A CSU is an abstract unit that represents the linearity of performance.
 
 ***
-# <div align="center">-------------WIP--------------</div>
-
+<!--
 ## <a name="step-5"></a>Step 5: Create a Topic using the Cloud UI
 
 1. On the navigation menu, select **Topics** and click **Create Topic**.
@@ -197,8 +195,10 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 ***
 
+-->
 
-## <a name="step-6"></a>Step 6: Create an API Key Pair
+
+## <a name="step-5"></a>Step 5: Create an API Key Pair
 
 1. Select **API keys** on the navigation menu.
 
@@ -211,6 +211,7 @@ In case, if you navigated away and want to use an existing environment, You can 
 1. After creating and saving the API key, you will see this API key in the Confluent Cloud UI in the **API keys** tab. If you don’t see the API key populate right away, refresh the browser.
 
 ***
+# <div align="center">-------------WIP--------------</div>
 
 ## <a name="step-7"></a>Step 7: Connect mongoDB Atlas to Confluent Cloud
 
