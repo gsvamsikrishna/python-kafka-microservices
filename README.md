@@ -24,10 +24,34 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 
 ***
 
+## **Prerequisites**
 
+1. Confluent Cloud Account
+    * Sign-up for a Confluent Cloud account [here](https://www.confluent.io/confluent-cloud/tryfree/).
+      <!--    * You can also Sign-up through Cloud Marketplaces: [AWS Marketplace](https://docs.confluent.io/cloud/current/billing/ccloud-aws-payg.html) or [Azure Marketplace](https://docs.confluent.io/cloud/current/billing/ccloud-azure-payg.html) or [GCP Marketplace](https://docs.confluent.io/cloud/current/billing/ccloud-gcp-payg.html)
+      -->
+    * Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”. New signups receive $400 to spend during their first 30 days. No credit card required.
+
+    > **Note:** You will create resources during this workshop that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the workshop. More details on the specifics can be found [here](https://www.confluent.io/confluent-cloud/tryfree/).
+
+From the system/ laptop/ instance where microservices are planned to run, setup the following
+
+1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
+    * portquiz.net:443
+    * portquiz.net:9092
+
+1. Install Python 3.8+ 
+2. Install Docker
+3. Install SQLite3
+4. Install python virtual environment: ```python3 -m pip install venv``` or ```python3 -m pip install virtualenv```
+5. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices```
+
+***
+
+<!--
 ## CQRS vs Event Sourcing
 While event sourcing can be used to implement CQRS, it does not necessarily imply event sourcing. In other words, CQRS is focused on the separation of write and read operations, while event sourcing is focused on storing the history of changes to a system as a sequence of events. CQRS and event sourcing can complement each other, but they are not the same thing.
-
+-->
 ## Pizza Takeaway Shop
 
 ### <div align="center">High level view</div>
@@ -62,39 +86,14 @@ Detailed view of all microservices and to what Kafka topics their produce and ar
 This workshop will be utilizing kafka cluster and ksqlDB running on Confluent Cloud. Microservices (python) and HTTP server will be running on your local machines. 
 ***
 
-
-## **Prerequisites**
-
-1. Confluent Cloud Account
-    * Sign-up for a Confluent Cloud account [here](https://www.confluent.io/confluent-cloud/tryfree/).
-      <!--    * You can also Sign-up through Cloud Marketplaces: [AWS Marketplace](https://docs.confluent.io/cloud/current/billing/ccloud-aws-payg.html) or [Azure Marketplace](https://docs.confluent.io/cloud/current/billing/ccloud-azure-payg.html) or [GCP Marketplace](https://docs.confluent.io/cloud/current/billing/ccloud-gcp-payg.html)
-      -->
-    * Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”. New signups receive $400 to spend during their first 30 days. No credit card required.
-
-    > **Note:** You will create resources during this workshop that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the workshop. More details on the specifics can be found [here](https://www.confluent.io/confluent-cloud/tryfree/).
-
-From the system/ laptop/ instance where micro-services are planned to run, setup the following
-
-1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
-    * portquiz.net:443
-    * portquiz.net:9092
-
-1. Install Python 3.8+ 
-2. Install Docker
-3. Install SQLite3
-4. Install python virtual environment: ```python3 -m pip install venv``` or ```python3 -m pip install virtualenv```
-5. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices```
-
-***
-
 ## **Objective**
 
-In this workshop you will learn how Confluent Cloud can enable you to design an Event Driven Microservices Application. During this workshop you’ll get hands-on experience with building out Confluent Cloud components; using a pre-built Python Micro-services application to produce and consume data; transforming the data in real-time with ksqlDB. The use case will be centered around accepting Pizza order events and passing it on to the food preparation system and delivery system, updating the various levels of food prepartion status to the customer and the delivery agent, update the orderstatus upon successful delivery.
+In this workshop you will learn how Confluent Cloud can enable you to design an Event Driven Microservices Application. During this workshop you’ll get hands-on experience with building out Confluent Cloud components; using a pre-built Python Microservices application to produce and consume data; transforming the data in real-time with ksqlDB. The use case will be centered around accepting Pizza order events and passing it on to the food preparation system and delivery system, updating the various levels of food preparation status to the customer and the delivery agent, update the orderstatus upon successful delivery.
 
 By the end of this workshop, you will have a solid understanding of building microservices architectures with Kafka, enabling you to create scalable, robust, and event-driven systems.
 You will also learn how to get started with Confluent Cloud, and the resources available to assist with development.
 
-This workshop is perfect for those looking to build Event Driven Architcture use cases and to get started with Confluent Cloud. This is also a great session to ask the engineers your questions and participate in a forum with other attendees who already use Confluent Cloud or plan to use Confluent Cloud. In this workshop, Python will be used as programming language for building micro-services. Python Knowledge is NOT Mandatory.
+This workshop is perfect for those looking to build Event Driven Architecture use cases and to get started with Confluent Cloud. This is also a great session to ask the engineers your questions and participate in a forum with other attendees who already use Confluent Cloud or plan to use Confluent Cloud. In this workshop, Python will be used as programming language for building microservices. Python Knowledge is NOT Mandatory.
 
 
 ***
@@ -103,7 +102,7 @@ This workshop is perfect for those looking to build Event Driven Architcture use
 
 1. First, access Confluent Cloud sign-in by navigating [here](https://confluent.cloud).
 1. When provided with the *username* and *password* prompts, fill in your credentials.
-    > **Note:** If you're logging in for the first time you will see a wizard that will walk you through the some tutorials. Minimize this as you will walk through these steps in this guide.
+    > **Note:** If you're logging in for the first time you will see a wizard that will walk you through some tutorials. Minimize this as you will walk through these steps in this guide.
 
 ***
 
@@ -219,7 +218,7 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 ## <a name="step-6"></a>Step 6: Prepare the config files and pre-requisites
 
-On the system/laptop/instance where the micro-services are expected to run
+On the system/laptop/instance where the microservices are expected to run
 
 - Go to the folder where the repo was cloned: ```cd python-kafka-microservices```
 - Create a virtual environment: ```python3 -m venv _venv```
@@ -323,7 +322,7 @@ CREATE STREAM IF NOT EXISTS PIZZA_BAKED (
 ```
 
 ```SQL
-STREAM_DELIVERED: f"""CREATE STREAM IF NOT EXISTS PIZZA_DELIVERED (
+CREATE STREAM IF NOT EXISTS PIZZA_DELIVERED (
     order_id VARCHAR KEY,
     status INT,
     timestamp BIGINT
@@ -452,7 +451,7 @@ INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_PENDING E
 (msvc_status) INFO 21:01:12.902 - Order 'b32ad' status updated: Your pizza was delivered (400)
 ```
 
-11. The flow is completed and, hopefully, we now have a happy customer for getting a delicious and nutricious pizza in such fast manner. The webapp, if on the order status page (in this case http://127.0.0.1:8000/orders/b32ad) will display in real time the status of the pizza, all of that thanks to the CQRS pattern. In a real life scenario that could be easily achieved by using frameworks such as ReactJS, however in this project it is used JQuery/AJAX async calls to accomplish that:
+11. The flow is completed and, hopefully, we now have a happy customer for getting a delicious and nutritious pizza in such fast manner. The webapp, if on the order status page (in this case http://127.0.0.1:8000/orders/b32ad) will display in real time the status of the pizza, all of that thanks to the CQRS pattern. In a real life scenario that could be easily achieved by using frameworks such as ReactJS, however in this project it is used JQuery/AJAX async calls to accomplish that:
 ![image](static/images/docs/webapp_order_delivered.png)
 
 
