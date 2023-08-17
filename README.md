@@ -13,13 +13,15 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 1. [Create an Environment and Enable Stream Governance Essentials](#step-2)
 1. [Create a Cluster](#step-3)
 1. [Setup ksqlDB](#step-4)
-1. [Create an API Key Pair](#step-5)
-1. [Prepare the config files and pre-requisites](#step-6)
+2. [Create Topics using the Cloud UI](#step-5)
+1. [Create an API Key Pair](#step-6)
+1. [Prepare the config files and pre-requisites](#step-7)
 1. [Cloud Dashboard Walkthrough](#step-8)
 1. [Create Streams and Stream Processing ksqlDB](#step-9)
-1. [Using the webapp and chronology of events](#step-10)
-1. [Stop the Demo](#step-11)
-1. [Clean Up Resources](#step-11)
+2. [Run the Microservices](#step-10)
+1. [Using the webapp and chronology of events](#step-11)
+1. [Stop the Demo](#step-12)
+1. [Clean Up Resources](#step-13)
 1. [Confluent Resources and Further Testing](#confluent-resources-and-further-testing)
 
 ***
@@ -172,37 +174,63 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 ## <a name="step-4"></a>Step 4: Setup ksqlDB
 
-1. On the navigation menu, select **ksqlDB** and click **Create application myself**.
+1. On the navigation menu, select **ksqlDB** and click **Create cluster myself**.
 
 1. Select **Global Access** and then **Continue**.
 
-1. Name your ksqlDB application and set the streaming units to 1 CSU
+1. Name your ksqlDB application and set the cluster size to 1 CSU
 
 1. Click **Launch Application**!
 > **Note:** A streaming unit, also known as a Confluent Streaming Unit (CSU), is the unit of pricing for Confluent Cloud ksqlDB. A CSU is an abstract unit that represents the linearity of performance.
 
 ***
-<!--
-## <a name="step-5"></a>Step 5: Create a Topic using the Cloud UI
 
-1. On the navigation menu, select **Topics** and click **Create Topic**.
+## <a name="step-5"></a>Step 5: Create Topics using the Cloud UI
+
+1. On the left-side navigation menu, select **Topics** and click **Create Topic**.
     > **Note:** Refresh the page if your cluster is still spinning up.
 
-1. Enter **abc.inventory** as the Topic name and **1** as the Number of partitions
+2. Enter **pizza_ordered** as the Topic name and **1** as the Number of partitions
     > **Note:** Topics have many configurable parameters that dictate how Confluent handles messages. A complete list of those configurations for Confluent Cloud can be found [here](https://docs.confluent.io/cloud/current/using/broker-config.html).  If you’re interested in viewing the default configurations, you can view them in the *Topic Summary* on the right side.
 
-1. Click **Create with defaults**.
+3. Click **Create with defaults**.
+4. If **Define a data contract** pop-up appears, choose **Skip**
 
-    * **inventory** is the name of one of the collections and abc is the database name within the mongoDB Atlas that you will be sourcing data from.
+5. Repeat the above steps and create the following five topics with ```Number of partitions = 1```
 
+    * **pizza_pending**
+
+    * **pizza_assembled**
+
+    * **pizza_baked**
+
+    * **pizza_delivered**
+
+    * **pizza_status**
+
+<!-- <div align="center">
+
+| Topic Name            | Number of partitions                        |
+|------------------------|-----------------------------------------|
+| `Name`      | MongoDbAtlasSourceConnector |
+| `Kafka API Key`              | From step 6                 |
+| `Kafka API Secret`           | From step 6              |
+| `Connection host`    | Will be provided during workshop            |
+| `Connection user` | dbUser               |
+| `Connection password`    | MONGODB_PW             |
+| `Database name`    | abc           |
+| `Copy existing data`    | True             |
+| `Output message format`    | JSON           |
+| `Tasks`    | 1             |
+
+</div>
+-->
 ***
 
--->
 
+## <a name="step-6"></a>Step 6: Create an API Key Pair
 
-## <a name="step-5"></a>Step 5: Create an API Key Pair
-
-1. Select **API keys** on the navigation menu.
+1. Select **API keys** on the left-side navigation menu under **Cluster Overview**
 
 1. If this is your first API key within your cluster, click **Create key**. If you have set up API keys in your cluster in the past and already have an existing API key, click **+ Add key**.
 
@@ -216,7 +244,7 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 ***
 
-## <a name="step-6"></a>Step 6: Prepare the config files and pre-requisites
+## <a name="step-7"></a>Step 7: Prepare the config files and pre-requisites
 
 On the system/laptop/instance where the microservices are expected to run
 
@@ -235,20 +263,6 @@ On the system/laptop/instance where the microservices are expected to run
     sasl.username = {{ CLUSTER_API_KEY }}
     sasl.password = {{ CLUSTER_API_SECRET }}
 ```
-
-***
-
-## <a name="step-7"></a>Step 7: Run the Microservices
-
-1. Run script to create topics*/ksqlDB streams: ```python3 run_me_first.py {KAFKA_CONFIG_FILE} {SYS_CONFIG_FILE}```
-- If files names were not changes run ```python3 run_me_first.py example.ini default.ini```
-
-2. Start the demo (all in a single terminal): ```./start_demo.sh {KAFKA_CONFIG_FILE} {SYS_CONFIG_FILE}```
-- If files names were not changes run ```./start_demo.sh example.ini default.ini```
-
-3. Open your browser and navigate to http://127.0.0.1:8000
-
->**Note:** In a real life scenario each microservice (consumer in a consumer group) could be instantiated for as many times as there are partitions to the topic, however that is just for demo/learning purposes, only one instance will be spawn. Also, for the simplicity of the demo, no Schema Registry is being used. That is not an ideal scenario as the "contract" between Producers and Consumers are "implicitly hard coded" other than being declared through the schema registry
 
 ***
 
@@ -368,8 +382,23 @@ INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_PENDING E
 
 
 ***
+## <a name="step-10"></a>Step 10: Run the Microservices
 
-## <a name="step-10"></a>Step 10: Using the webapp and chronology of events
+<!--
+1. Run script to create topics*/ksqlDB streams: ```python3 run_me_first.py {KAFKA_CONFIG_FILE} {SYS_CONFIG_FILE}```
+- If files names were not changes run ```python3 run_me_first.py example.ini default.ini```
+-->
+
+2. Start the demo (all in a single terminal): ```./start_demo.sh {KAFKA_CONFIG_FILE} {SYS_CONFIG_FILE}```
+- If files names were not changes run ```./start_demo.sh example.ini default.ini```
+
+3. Open your browser and navigate to http://127.0.0.1:8000
+
+>**Note:** In a real life scenario each microservice (consumer in a consumer group) could be instantiated for as many times as there are partitions to the topic, however that is just for demo/learning purposes, only one instance will be spawn. Also, for the simplicity of the demo, no Schema Registry is being used. That is not an ideal scenario as the "contract" between Producers and Consumers are "implicitly hard coded" other than being declared through the schema registry
+
+***
+
+## <a name="step-11"></a>Step 11: Using the webapp and chronology of events
 
 
 1. After starting all scripts and access the landing page (http://127.0.0.1:8000), customise your pizza and submit your order:
@@ -457,7 +486,7 @@ INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_PENDING E
 
 ***
 
-## <a name="step-11"></a>Step 11: Stop the Demo
+## <a name="step-12"></a>Step 12: Stop the Demo
 
 
 1. To stop the demo:
@@ -494,7 +523,7 @@ One very important element of any Kafka consumer is by handling OS signals to be
 
 ***
 
-## <a name="step-12"></a>Step 12: Clean Up Resources
+## <a name="step-13"></a>Step 13: Clean Up Resources
 
 Deleting the resources you created during this workshop will prevent you from incurring additional charges.
 
