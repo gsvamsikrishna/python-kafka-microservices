@@ -118,7 +118,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 
 Next page will show you "Stream Governance Packages"
-
+<!--
 Stream Governance includes broadly three major features: Schema Registry, Stream Catalog, and Stream Lineage
 
 #### Schema Registry:
@@ -139,7 +139,7 @@ Stream lineage provides a graphical UI of event streams and data relationships w
 - Where did data come from?
 - Where is it going?
 - Where, when, and how was it transformed?
-
+-->
 You will be exploring Stream Lineage and Stream Catalog in more detail as part of the workshop. First, you will need to enable Stream Governance Essentials within your environment.
 If you are continuing after new environment creation, you should be on the Stream Governance Packages page now.
 1. Select **Begin Configuration** under Essentials.
@@ -489,7 +489,7 @@ One very important element of any Kafka consumer is by handling OS signals to be
 ```
 
 
-2. Deactivate the virtual environment: ```deactivate```
+2. Deactivate the virtual environment by running: ```deactivate```
 
 
 ***
@@ -502,7 +502,7 @@ Deleting the resources you created during this workshop will prevent you from in
 
 2. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
 
-3. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
+3. Delete the Environment by expanding the right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
 
 ***
 
@@ -533,8 +533,8 @@ Have you noticed the microservice **Deliver Pizza** is stateful as it has two st
 As that microservice is subscribed to two different topics, Apache Kafka cannot guarantee the order of events for the same event key. Hang on, but won't the early notification always arrive before the notification the pizza is baked (see the architecture diagram above)? The answer to that is: usually yes, as the first step happens before the second one, however what if for some reason the microservice **Deliver Pizza** is down and a bunch of events get pushed through the topics? When the microservice is brought up it will consume the events from the two topics and not necessarily in the same chronological order (for the same event key). For that reason microservice like that needs to take into account this kind of situations. On this project, if that happens the customer would first get the status "Bear with us we are checking your order, it won’t take long" (once the pizza is baked notification is processed), then would get the status "Your pizza was delivered" (once the early warning notification is processed).
 
 #### **IMPORTANT 2**
-The microservice **Process Status** is also stateful as it receives several notifications for the same event key. If that service was to be handled as stateless it would be a problem if a given order is not fully processed, for example, what if the baker decided to call it a day? The status of the order would get stuck forever as "Your pizza is in the oven". For example, it could be estimated the orders shouldn't take more than 'X minutes' between being ordered and baked and 'Y minutes' between being baked and not completed yet, creating then a SLA in between microservices, if that gets violated it could trigger a notification to state something got stuck (at least the pizza shop manager would get notified before the customer call to complain about the delay).<br><br>
-What that microservice does is to spaw a new thread with an infinite loop to check the status of all orders in progress for every few seconds, like a watchdog.
+The microservice **Process Status** is also stateful as it receives several notifications for the same event key. If that service was to be handled as stateless it would be a problem if a given order is not fully processed, for example, what if the baker decided to call it a day? The status of the order would get stuck forever as "Your pizza is in the oven". For example, it could be estimated the orders shouldn't take more than 'X minutes' between being ordered and baked and 'Y minutes' between being baked and not completed yet, creating then an SLA in between microservices, if that gets violated it could trigger a notification to state something got stuck (at least the pizza shop manager would get notified before the customer call to complain about the delay).<br><br>
+What that microservice does is to spawn a new thread with an infinite loop to check the status of all orders in progress for every few seconds, like a watchdog.
 
 Hope you enjoyed the Workshop :-) Thanks!
 
