@@ -251,10 +251,22 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 On the system/laptop/instance where the microservices are expected to run
 
-- Go to the folder where the repo was cloned: ```cd python-kafka-microservices```
-- Create a virtual environment: ```python3 -m venv _venv```
-- Activate the virtual environment: ```source _venv/bin/activate```
-- Install project requirements: ```python3 -m pip install -r requirements.txt```
+- Go to the folder where the repo was cloned:
+  ```
+  cd python-kafka-microservices
+  ```
+- Create a virtual environment:
+  ```
+  python3 -m venv _venv
+  ```
+- Activate the virtual environment:
+  ```
+  source _venv/bin/activate
+  ```
+- Install project requirements:
+  ```
+  python3 -m pip install -r requirements.txt
+  ```
 
 - ```{KAFKA_CONFIG_FILE}``` is a Kafka configuration file containing the properties to access the Apache Kafka cluster, this file must be located under the folder ```config_kafka/``` (see file ```config_kafka/example.ini``` for reference):
     - Use the details captured in earlier steps to fill in the details
