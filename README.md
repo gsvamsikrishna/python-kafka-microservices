@@ -58,7 +58,7 @@ While event sourcing can be used to implement CQRS, it does not necessarily impl
 
 ### <div align="center">High level view</div>
 This pizza takeaway shop ecosystem was designed using Python and made simple for demo/learning purposes, basically the following are the app/microservices created:
-- Web application using the Flask lib (```webapp.py```) so users can login to, customise their pizza, order and follow up the status of their order. This webapp will be the Command portion of the CQRS pattern. To make it simpler a SQLite3 state store* is being used as the materialised view between Command and Query, however in a real life scenario that could be an in-memory data store or ksqlDB/Flink
+- Web application using the Flask lib (```webapp.py```) so users can login to, customise their pizza, order and follow up the status of their order. This webapp will be the Command portion of the CQRS pattern. To make it simpler a SQLite3 state store* is being used as the materialised view between Command and Query, however in a real life scenario that could be an in-memory data store or ksqlDB
 - Once the pizza is ordered it will go through four microservices (following the same flow of a real pizza shop):
   - Assemble the pizza as per order (```msvc_assemble.py```)
   - Bake the pizza (```msvc_bake.py```)
@@ -180,9 +180,12 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 1. Name your ksqlDB application and set the cluster size to 1 CSU
 
-1. Click **Launch Application**!
 > **Note:** A streaming unit, also known as a Confluent Streaming Unit (CSU), is the unit of pricing for Confluent Cloud ksqlDB. A CSU is an abstract unit that represents the linearity of performance.
 
+1. Click **Launch Application**!
+
+> **Note:** It may take few minutes for the cluster to be ready. Meanwhile, you can continue with the next steps.
+   
 ***
 
 ## <a name="step-5"></a>Step 5: Create Topics using the Cloud UI
@@ -232,7 +235,7 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 1. Select **API keys** on the left-side navigation menu under **Cluster Overview**
 
-1. If this is your first API key within your cluster, click **Create key**. If you have set up API keys in your cluster in the past and already have an existing API key, click **+ Add key**.
+1. Click **+ Add key** on the right side of the page
 
 1. Select **Global Access**, then click Next.
 
@@ -274,11 +277,11 @@ This section will be conducted by the workshop instructor.  You can find additio
 
 ## <a name="step-9"></a>Step 9: Create Streams and Stream Processing ksqlDB
 
-Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
+You can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
 With ksqlDB, you have the ability to leverage streams and tables from your topics in Confluent. A stream in ksqlDB is a topic with a schema and it records the history of what has happened in the world as a sequence of events. Tables are similar to traditional RDBMS tables. If you’re interested in learning more about ksqlDB and the differences between streams and tables, I recommend reading these two blogs [here](https://www.confluent.io/blog/kafka-streams-tables-part-3-event-processing-fundamentals/) and [here](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/).
 
-1. Navigate back to the ksqlDB tab and click on your application name. This will bring us to the ksqlDB editor.
+1. Navigate back to the ksqlDB tab and click on your ksqlDB Cluster name. This will bring us to the ksqlDB editor.
 
 >**Note:** You can interact with ksqlDB through the Editor. You can create a stream by using the CREATE STREAM statement and a table using the CREATE TABLE statement.
 
@@ -415,7 +418,7 @@ INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_PENDING E
 3. The webapp will display the confirmation of the order:
 ![image](static/images/docs/webapp_order_confirmation.png)
 
-4. The microservice **Deliver Pizza** (step 1/2) receives early warning about a new order by subscribing to topic ```pizza-ordered```. In a real life scenario it would get the ```customer_id``` data and query its data store (e.g., ksqlDB/Flink) and fetch the delivery address:
+4. The microservice **Deliver Pizza** (step 1/2) receives early warning about a new order by subscribing to topic ```pizza-ordered```. In a real life scenario it would get the ```customer_id``` data and query its data store (e.g., ksqlDB) and fetch the delivery address:
 ```
 (msvc_delivery) INFO 21:00:18.516 - Subscribed to topic(s): pizza-ordered, pizza-baked
 (msvc_delivery) INFO 21:00:39.609 - Early warning to deliver order 'b32ad' to customer_id 'd94a6c43d9f487c1bef659f05c002213'
@@ -489,8 +492,7 @@ INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_PENDING E
 ## <a name="step-12"></a>Step 12: Stop the Demo
 
 
-1. To stop the demo:
-  - To stop all services at once: ```./stop_demo.sh```
+1. To stop the demo: ```./stop_demo.sh```
 
 ### Graceful shutdown
 One very important element of any Kafka consumer is by handling OS signals to be able to perform a graceful shutdown. Any consumer in a consumer group should inform the cluster it is leaving so it can rebalance itself other than wait for a timeout. All microservices used in this project have a graceful shutdown procedure in place, example:
