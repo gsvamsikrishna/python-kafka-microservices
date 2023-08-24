@@ -193,7 +193,7 @@ In case, if you navigated away and want to use an existing environment, You can 
 1. On the left-side navigation menu, select **Topics** and click **Create Topic**.
     > **Note:** Refresh the page if your cluster is still spinning up.
 
-2. Enter **pizza-ordered** as the Topic name and **1** as the Number of partitions
+2. Enter ```pizza-ordered``` as the Topic name and **1** as the Number of partitions
     > **Note:** Topics have many configurable parameters that dictate how Confluent handles messages. A complete list of those configurations for Confluent Cloud can be found [here](https://docs.confluent.io/cloud/current/using/broker-config.html).  If you’re interested in viewing the default configurations, you can view them in the *Topic Summary* on the right side.
 
 3. Click **Create with defaults**.
@@ -201,15 +201,15 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 5. Repeat the above steps and create the following five topics with ```Number of partitions = 1```
 
-    * **pizza-pending**
+    * ```pizza-pending```
 
-    * **pizza-assembled**
+    * ```pizza-assembled```
 
-    * **pizza-baked**
+    * ```pizza-baked```
 
-    * **pizza-delivered**
+    * ```pizza-delivered```
 
-    * **pizza-status**
+    * ```pizza-status```
 
 <!-- <div align="center">
 
