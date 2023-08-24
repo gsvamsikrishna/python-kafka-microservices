@@ -115,11 +115,9 @@ An environment contains Confluent clusters and its deployed components such as C
 1. Click **+ Add environment**.
     > **Note:** There is a *default* environment ready in your account upon account creation. You can use this *default* environment for the purpose of this workshop if you do not wish to create an additional environment.
 
-    * Specify a meaningful `name` for your environment and then click **Create**.
-        > **Note:** It will take a few minutes to assign the resources to make this new environment available for use.
-
-
-Next page will show you "Stream Governance Packages"
+2. Specify a meaningful `name` for your environment and then click **Create**.
+    > **Note:** It will take a few minutes to assign the resources to make this new environment available for use.
+    
 <!--
 Stream Governance includes broadly three major features: Schema Registry, Stream Catalog, and Stream Lineage
 
@@ -142,10 +140,12 @@ Stream lineage provides a graphical UI of event streams and data relationships w
 - Where is it going?
 - Where, when, and how was it transformed?
 -->
+<!--
 You will be exploring Stream Lineage and Stream Catalog in more detail as part of the workshop. First, you will need to enable Stream Governance Essentials within your environment.
-If you are continuing after new environment creation, you should be on the Stream Governance Packages page now.
-1. Select **Begin Configuration** under Essentials.
-2. Choose cloud provider and region. You can select the nearest region which has $0/hr to keep the costs low for this workshop. Click on **Enable** at the bottom of the page.
+    If you are continuing after new environment creation, you should be on the Stream Governance Packages page now.
+-->
+3. Next page will show you "Stream Governance Packages". Select **Begin Configuration** under Essentials.
+4. Choose cloud provider and region. You can select the nearest region which has $0/hr to keep the costs low for this workshop. Click on **Enable** at the bottom of the page.
 
 In case, if you navigated away and want to use an existing environment, You can enable Stream Governance package by following the below steps:
 1. Return to your environment by clicking on the Confluent icon at the top left corner and then clicking your environment tile.
@@ -180,11 +180,11 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 1. Name your ksqlDB application and set the cluster size to 1 CSU
 
-        > **Note:** A streaming unit, also known as a Confluent Streaming Unit (CSU), is the unit of pricing for Confluent Cloud ksqlDB. A CSU is an abstract unit that represents the linearity of performance.
+    > **Note:** A streaming unit, also known as a Confluent Streaming Unit (CSU), is the unit of pricing for Confluent Cloud ksqlDB. A CSU is an abstract unit that represents the linearity of performance.
 
 1. Click **Launch Application**!
 
-        > **Note:** It may take few minutes for the cluster to be ready. Meanwhile, you can continue with the next steps.
+    > **Note:** It may take few minutes for the cluster to be ready. Meanwhile, you can continue with the next steps.
    
 ***
 
