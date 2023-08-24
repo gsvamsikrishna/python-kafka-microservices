@@ -180,11 +180,11 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 1. Name your ksqlDB application and set the cluster size to 1 CSU
 
-> **Note:** A streaming unit, also known as a Confluent Streaming Unit (CSU), is the unit of pricing for Confluent Cloud ksqlDB. A CSU is an abstract unit that represents the linearity of performance.
+        > **Note:** A streaming unit, also known as a Confluent Streaming Unit (CSU), is the unit of pricing for Confluent Cloud ksqlDB. A CSU is an abstract unit that represents the linearity of performance.
 
 1. Click **Launch Application**!
 
-> **Note:** It may take few minutes for the cluster to be ready. Meanwhile, you can continue with the next steps.
+        > **Note:** It may take few minutes for the cluster to be ready. Meanwhile, you can continue with the next steps.
    
 ***
 
