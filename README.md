@@ -237,6 +237,11 @@ In case, if you navigated away and want to use an existing environment, You can 
     * ```pizza-status```
 
     > Topic creation can be autoamted using API/ CLI/ Terraform and ksqlDB queries. This is not covered in this workshop.
+
+Your Topics page should like this now
+![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/562a8658-5e18-4406-94c4-80b65dabc2d7)
+
+
 ***
 
 
