@@ -310,6 +310,10 @@ CREATE STREAM IF NOT EXISTS PIZZA_ORDERED (
     TIMESTAMP = 'timestamp'
 );
 ```
+The result should look like below with status = SUCCESS
+![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/7dbec68a-4171-49d0-8b1f-1f1bc64bcaed)
+
+Now, clear the Editor contents and repeat the above steps with the below queries.
 
 ```SQL
 CREATE STREAM IF NOT EXISTS PIZZA_ASSEMBLED (
