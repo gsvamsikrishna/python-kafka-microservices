@@ -535,6 +535,13 @@ Deleting the resources you created during this workshop will prevent you from in
 
 ***
 
+# Additional Troubleshooting
+
+If ```The virtual environment was not created successfully because ensurepip is not available.``` Error comesup install python3-venv using 
+```
+sudo  apt install python3.10-venv
+```
+
 ## <a name="confluent-resources-and-further-testing"></a>Confluent Resources and Further Testing
 
 Here are some links to check out if you are interested in further testing:
