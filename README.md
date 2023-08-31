@@ -198,7 +198,7 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 ## <a name="step-4"></a>Step 4: Setup ksqlDB
 
-1. On the navigation menu, select **ksqlDB** and click **Create cluster myself**.
+1. On the left-side navigation menu, select **ksqlDB** and click **Create cluster myself**.
 
 1. Select **Global Access** and then **Continue**.
 
@@ -206,10 +206,11 @@ In case, if you navigated away and want to use an existing environment, You can 
 
     > **Note:** A streaming unit, also known as a Confluent Streaming Unit (CSU), is the unit of pricing for Confluent Cloud ksqlDB. A CSU is an abstract unit that represents the linearity of performance.
 
-1. Click **Launch Application**!
+1. Click **Launch cluster**!
 
     > **Note:** It may take few minutes for the cluster to be ready. Meanwhile, you can continue with the next steps.
-   
+   ![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/25047846-299c-45a5-ba2a-0171b618b7c5)
+
 ***
 
 ## <a name="step-5"></a>Step 5: Create Topics using the Cloud UI
