@@ -388,6 +388,9 @@ INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_BAKED EMI
 INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_DELIVERED EMIT CHANGES;
 INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_PENDING EMIT CHANGES;
 ```
+You should see 5 SUCCESS messages after executing the above query.
+Now, navigate to the **Flow** tab. You should see the topology as shown below.
+![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/a92a4398-2f1a-4252-b947-ad2be9eee273)
 
 
 ***
