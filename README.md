@@ -59,6 +59,7 @@ From the system/ laptop/ instance where microservices are planned to run, setup 
    ```
    sqlite3
    ```
+   Check [this external reference](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-sqlite-on-ubuntu-20-04) if required
 5. Install python virtual environment: ```python3 -m pip install venv``` or ```python3 -m pip install virtualenv```
 6. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices```
 
