@@ -181,14 +181,14 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 ## <a name="step-3"></a>Step 3: Create a Cluster
 
-1. Now that you have an environment, let's create a cluster. Select **Create Cluster**.
+1. Now that you have an environment, let's create a cluster. Select **Create Cluster on my own**.
     > **Note**: Confluent Cloud clusters are available in 3 types: **Basic**, **Standard**, and **Dedicated**. Basic is intended for development use cases so you should use that for this lab. Basic clusters only support single zone availability. Standard and Dedicated clusters are intended for production use and support Multi-zone deployments. If you’re interested in learning more about the different types of clusters and their associated features and limits, refer to this [documentation](https://docs.confluent.io/current/cloud/clusters/cluster-types.html).
 
     * Choose the **Basic** cluster type.
 
     * Click **Begin Configuration**.
 
-    * Choose **AWS/ Azure/ GCP** as your Cloud Provider and your preferred Region.
+    * Choose **AWS/ Azure/ GCP** as your Cloud Provider --> select your preferred **Region** --> Leave the Availability **Single Zone**
         
     * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
 
