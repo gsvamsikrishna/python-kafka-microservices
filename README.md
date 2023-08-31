@@ -51,8 +51,16 @@ From the system/ laptop/ instance where microservices are planned to run, setup 
    If you need to install python3, [this may help](https://docs.python-guide.org/starting/install3/linux/)
 <!--3. Install Docker-->
 3. Install SQLite3
-4. Install python virtual environment: ```python3 -m pip install venv``` or ```python3 -m pip install virtualenv```
-5. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices```
+   To install, run
+   ```
+   sudo apt install sqlite3
+   ```
+   To check, run
+   ```
+   sqlite3
+   ```
+5. Install python virtual environment: ```python3 -m pip install venv``` or ```python3 -m pip install virtualenv```
+6. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices```
 
 ***
 
