@@ -142,32 +142,6 @@ An environment contains Confluent clusters and its deployed components such as C
 3. Specify a meaningful `name` for your environment and then click **Create**.
     > **Note:** It will take a few minutes to assign the resources to make this new environment available for use.
     
-<!--
-Stream Governance includes broadly three major features: Schema Registry, Stream Catalog, and Stream Lineage
-
-#### Schema Registry:
-A topic contains messages, and each message is a key-value pair. The message key or the message value (or both) can be serialized as JSON, Avro, or Protobuf. A schema defines the structure of the data format.
-
-Confluent Cloud Schema Registry is used to manage schemas and it defines a scope in which schemas can evolve. It stores a versioned history of all schemas, provides multiple compatibility settings, and allows schemas to evolve according to these compatibility settings. It is also fully-managed.
-For the simplicity of the demo, no Schema Registry is being used. That is not an ideal scenario as the "contract" between Producers and Consumers are "implicitly hard coded" other than being declared through the schema registry
-
-#### Stream Catalog:
-Stream catalog in Confluent Cloud centralizes all entities metadata and makes them available for search and discovery using the UI and APIs. Entity types available on the Stream catalog are:
-- Schemas - Schema subject name - Schema record name - Schema field name
-- Topics
-- Connectors
-
-#### Stream Lineage:
-Stream lineage provides a graphical UI of event streams and data relationships with both a bird’s eye view and drill-down magnification for answering questions like:
-
-- Where did data come from?
-- Where is it going?
-- Where, when, and how was it transformed?
--->
-<!--
-You will be exploring Stream Lineage and Stream Catalog in more detail as part of the workshop. First, you will need to enable Stream Governance Essentials within your environment.
-    If you are continuing after new environment creation, you should be on the Stream Governance Packages page now.
--->
 4. Next page will show you "Stream Governance Packages". Select **Begin Configuration** under Essentials.
 5. Choose cloud provider and region. You can select the nearest region which has $0/hr to keep the costs low for this workshop. Click on **Enable** at the bottom of the page.
 
@@ -253,11 +227,9 @@ Your Topics page should like this now
 
 1. Select **Global Access**, then click Next.
 
-1. Save your API key and secret - you will need these during the workshop.
+1. Copy and Save your API key and secret - you will need these during the workshop.
 
-1. After creating and saving the API key, you will see this API key in the Confluent Cloud UI in the **API keys** tab. If you don’t see the API key populate right away, refresh the browser.
-
-1. Note down the API Key and Secret for use in later steps.
+1. CLick **Download and continue**. You will see this API key in the Confluent Cloud UI in the **API keys** tab. If you don’t see the API key populate right away, refresh the browser.
 
 ***
 
