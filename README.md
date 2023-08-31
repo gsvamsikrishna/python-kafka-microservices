@@ -42,8 +42,14 @@ From the system/ laptop/ instance where microservices are planned to run, setup 
     * portquiz.net:443
     * portquiz.net:9092
 
-1. Install Python 3.8+ 
-2. Install Docker
+1. Install Python 3.8+
+   > **Note:** If you are using a Linux distribution, chances are you already have Python 3 pre-installed. To see which version of Python 3 you have installed, open a command prompt and run
+   ```
+    python3 --version
+   ```
+
+   If you need to install python3, [this may help](https://docs.python-guide.org/starting/install3/linux/)
+<!--3. Install Docker-->
 3. Install SQLite3
 4. Install python virtual environment: ```python3 -m pip install venv``` or ```python3 -m pip install virtualenv```
 5. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices```
