@@ -22,8 +22,9 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 1. [Create Streams and Stream Processing ksqlDB](#step-9)
 2. [Run the Microservices](#step-10)
 1. [Using the webapp and chronology of events](#step-11)
-1. [Stop the Demo](#step-12)
-1. [Clean Up Resources](#step-13)
+2. [View Stream Lineage](#step-12)
+1. [Stop the Demo](#step-13)
+1. [Clean Up Resources](#step-14)
 1. [Confluent Resources and Further Testing](#confluent-resources-and-further-testing)
 
 ***
@@ -515,8 +516,19 @@ You should see an output similar to this
 
 
 ***
+## <a name="step-12"></a>Step 12: View Stream Lineage
 
-## <a name="step-12"></a>Step 12: Stop the Demo
+1. On the left-side navigation pane, click on **Stream Lineage**
+Stream lineage provides a graphical UI of event streams and data relationships with both a bird’s eye view and drill-down magnification for answering questions like:
+-Where did data come from?
+-Where is it going?
+-Where, when, and how was it transformed?
+
+![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/104d6c87-5175-44fd-a228-d60a27a07a48)
+
+
+***
+## <a name="step-13"></a>Step 13: Stop the Demo
 
 
 1. To stop the demo: ```./stop_demo.sh```
@@ -552,7 +564,7 @@ One very important element of any Kafka consumer is by handling OS signals to be
 
 ***
 
-## <a name="step-13"></a>Step 13: Clean Up Resources
+## <a name="step-14"></a>Step 14: Clean Up Resources
 
 Deleting the resources you created during this workshop will prevent you from incurring additional charges.
 
