@@ -188,11 +188,11 @@ In case, if you navigated away and want to use an existing environment, You can 
 
     * Click **Begin Configuration**.
 
-    * Choose **AWS/ Azure/ GCP** as your Cloud Provider --> select your preferred **Region** --> Leave the Availability **Single Zone**
+    * Choose **AWS/ Azure/ GCP** as your Cloud Provider --> select your preferred **Region** --> Leave the Availability as **Single Zone**
         
     * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
 
-2. Once the cluster is ready to use, you will be on the "Cluster Overview" page. On the left side pane, click on **Cluster Settings** under **Cluster Overview**. Note down the Bootstrap server details for use in later steps.
+2. Once the cluster is ready to use, you will be on the "Cluster Overview" page. On the left side pane, click on **Cluster Settings** under **Cluster Overview**. Copy the Bootstrap server details for use in later steps.
 
 ***
 
