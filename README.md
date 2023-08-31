@@ -9,7 +9,7 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 ## <div align="center">Lab Guide</div>
 
 ## **Agenda**
-[Prerequisites](#step-0a)
+[Prerequisites](#step-0a)<br>
 [Use case details: Pizza Takeaway Shop](#step-0b)
 1. [Log Into Confluent Cloud](#step-1)
 1. [Create an Environment and Enable Stream Governance Essentials](#step-2)
