@@ -133,10 +133,11 @@ This workshop is perfect for those looking to build Event Driven Architecture us
 
 An environment contains Confluent clusters and its deployed components such as Connect, ksqlDB, and Schema Registry. You have the ability to create different environments based on your company's requirements. Confluent has seen companies use environments to separate Development/Testing, Pre-Production, and Production clusters.
 
-1. Click **+ Add environment**.
+1. Select **Environments** from the left side Navigation pane.
+2. Click **+ Add cloud environment**.
     > **Note:** There is a *default* environment ready in your account upon account creation. You can use this *default* environment for the purpose of this workshop if you do not wish to create an additional environment.
 
-2. Specify a meaningful `name` for your environment and then click **Create**.
+3. Specify a meaningful `name` for your environment and then click **Create**.
     > **Note:** It will take a few minutes to assign the resources to make this new environment available for use.
     
 <!--
@@ -165,11 +166,11 @@ Stream lineage provides a graphical UI of event streams and data relationships w
 You will be exploring Stream Lineage and Stream Catalog in more detail as part of the workshop. First, you will need to enable Stream Governance Essentials within your environment.
     If you are continuing after new environment creation, you should be on the Stream Governance Packages page now.
 -->
-3. Next page will show you "Stream Governance Packages". Select **Begin Configuration** under Essentials.
-4. Choose cloud provider and region. You can select the nearest region which has $0/hr to keep the costs low for this workshop. Click on **Enable** at the bottom of the page.
+4. Next page will show you "Stream Governance Packages". Select **Begin Configuration** under Essentials.
+5. Choose cloud provider and region. You can select the nearest region which has $0/hr to keep the costs low for this workshop. Click on **Enable** at the bottom of the page.
 
 In case, if you navigated away and want to use an existing environment, You can enable Stream Governance package by following the below steps:
-1. Return to your environment by clicking on the Confluent icon at the top left corner and then clicking your environment tile.
+1. Return to your environment by clicking on the **Environments** below the Confluent icon at the top left corner, and then clicking your environment tile.
 2. On the right side pane, you will find **Stream Governance Package** grayed out. Click on "Enable Now".
 3. Select **Begin Configuration** under Essentials.
 4. Choose cloud provider and region. You can select the nearest region which has $0/hr to keep the costs low for this workshop. Click on **Enable** at the bottom of the page.
