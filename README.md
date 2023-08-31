@@ -43,7 +43,7 @@ From the system/ laptop/ instance where microservices are planned to run, setup 
     * portquiz.net:9092
 
 1. Install Python 3.8+
-   > **Note:** If you are using a Linux distribution, chances are you already have Python 3 pre-installed. To see which version of Python 3 you have installed, open a command prompt and run
+   > If you are using a Linux distribution, chances are you already have Python 3 pre-installed. To see which version of Python 3 you have installed, open a command prompt and run
    ```
     python3 --version
    ```
@@ -61,7 +61,11 @@ From the system/ laptop/ instance where microservices are planned to run, setup 
    ```
    Check [this external reference](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-sqlite-on-ubuntu-20-04) if required
 5. Install python virtual environment: ```python3 -m pip install venv``` or ```python3 -m pip install virtualenv```
-6. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices```
+   > If ```/usr/bin/python3: No module named pip``` error shows up, install python3-pip using
+   > ```
+   > sudo apt-get install -y python3-pip
+   > ```
+7. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices```
 
 ***
 
