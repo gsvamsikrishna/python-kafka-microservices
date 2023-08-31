@@ -38,7 +38,7 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 
 From the system/ laptop/ instance where microservices are planned to run, setup the following
 
-1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
+1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser or using curl in the CLI.
     * portquiz.net:443
     * portquiz.net:9092
 
