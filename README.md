@@ -9,6 +9,8 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 ## <div align="center">Lab Guide</div>
 
 ## **Agenda**
+[Prerequisites](#step-0a)
+[Use case details: Pizza Takeaway Shop](#step-0b)
 1. [Log Into Confluent Cloud](#step-1)
 1. [Create an Environment and Enable Stream Governance Essentials](#step-2)
 1. [Create a Cluster](#step-3)
@@ -26,7 +28,7 @@ This is an example of a microservice ecosystem using the CQRS (Command and Query
 
 ***
 
-## **Prerequisites**
+## <a name="step-0a"></a>**Prerequisites**
 
 1. Confluent Cloud Account
     * Sign-up for a Confluent Cloud account [here](https://www.confluent.io/confluent-cloud/tryfree/).
@@ -75,7 +77,7 @@ From the system/ laptop/ instance where microservices are planned to run, setup 
 ## CQRS vs Event Sourcing
 While event sourcing can be used to implement CQRS, it does not necessarily imply event sourcing. In other words, CQRS is focused on the separation of write and read operations, while event sourcing is focused on storing the history of changes to a system as a sequence of events. CQRS and event sourcing can complement each other, but they are not the same thing.
 -->
-## Pizza Takeaway Shop
+## <a name="step-0b"></a>Pizza Takeaway Shop
 
 ### <div align="center">High level view</div>
 This pizza takeaway shop ecosystem was designed using Python and made simple for demo/learning purposes, basically the following are the app/microservices created:
