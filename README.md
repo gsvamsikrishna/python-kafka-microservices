@@ -67,9 +67,14 @@ From the system/ laptop/ instance where microservices are planned to run, setup 
    > ```
    > sudo apt-get install -y python3-pip
    > ```
-7. Clone this repo: ```git clone git@github.com:gsvamsikrishna/python-kafka-microservices``` or
-   
-    ``` git clone https://github.com/gsvamsikrishna/python-kafka-microservices.git```
+7. Clone this repo:
+   ```
+   git clone git@github.com:gsvamsikrishna/python-kafka-microservices
+   ```
+   or
+   ```
+   git clone https://github.com/gsvamsikrishna/python-kafka-microservices.git
+   ```
 
 ***
 
