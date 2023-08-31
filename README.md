@@ -403,7 +403,7 @@ Now, navigate to the **Flow** tab. You should see the topology as shown below. <
 -->
 
 1. Start the demo: ```./start_demo.sh {KAFKA_CONFIG_FILE} {SYS_CONFIG_FILE}```
-- If files names were not changes run
+- If file names were not changed, run
   ```
   ./start_demo.sh example.ini default.ini
   ```
