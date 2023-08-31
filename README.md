@@ -376,6 +376,10 @@ CREATE STREAM IF NOT EXISTS PIZZA_STATUS (
 );
 ```
 
+If all the above six queries were executed correctly, you should see all the streams on the right-side of the page as shown below.
+![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/67cf9a90-cc51-4298-90f1-c5b0b1fe4cb7)
+
+
 **Derived Collections**: With the source collections created (streams) we can now extract the status field of each event and have them merged into a single topic/stream by creating persistent queries:
 ```
 INSERT INTO PIZZA_STATUS SELECT order_id, status, timestamp FROM PIZZA_ORDERED EMIT CHANGES;
