@@ -402,10 +402,16 @@ Now, navigate to the **Flow** tab. You should see the topology as shown below. <
 - If files names were not changes run ```python3 run_me_first.py example.ini default.ini```
 -->
 
-2. Start the demo (all in a single terminal): ```./start_demo.sh {KAFKA_CONFIG_FILE} {SYS_CONFIG_FILE}```
-- If files names were not changes run ```./start_demo.sh example.ini default.ini```
+1. Start the demo: ```./start_demo.sh {KAFKA_CONFIG_FILE} {SYS_CONFIG_FILE}```
+- If files names were not changes run
+  ```
+  ./start_demo.sh example.ini default.ini
+  ```
+You should see an output similar to this
+![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/edfcd90a-6711-4926-9eea-afe40c6635a2)
 
-3. Open your browser and navigate to http://127.0.0.1:8000
+
+2. Open your browser and navigate to http://127.0.0.1:8000
 
 >**Note:** In a real life scenario each microservice (consumer in a consumer group) could be instantiated for as many times as there are partitions to the topic, however that is just for demo/learning purposes, only one instance will be spawn. Also, for the simplicity of the demo, no Schema Registry is being used. That is not an ideal scenario as the "contract" between Producers and Consumers are "implicitly hard coded" other than being declared through the schema registry
 
