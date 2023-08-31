@@ -215,7 +215,7 @@ In case, if you navigated away and want to use an existing environment, You can 
 
 ## <a name="step-5"></a>Step 5: Create Topics using the Cloud UI
 
-1. On the left-side navigation menu, select **Topics** and click **Create Topic**.
+1. On the left-side navigation menu, select **Topics** and click **+ Add Topic**.
     > **Note:** Refresh the page if your cluster is still spinning up.
 
 2. Enter ```pizza-ordered``` as the Topic name and **1** as the Number of partitions
@@ -236,23 +236,7 @@ In case, if you navigated away and want to use an existing environment, You can 
 
     * ```pizza-status```
 
-<!-- <div align="center">
-
-| Topic Name            | Number of partitions                        |
-|------------------------|-----------------------------------------|
-| `Name`      | MongoDbAtlasSourceConnector |
-| `Kafka API Key`              | From step 6                 |
-| `Kafka API Secret`           | From step 6              |
-| `Connection host`    | Will be provided during workshop            |
-| `Connection user` | dbUser               |
-| `Connection password`    | MONGODB_PW             |
-| `Database name`    | abc           |
-| `Copy existing data`    | True             |
-| `Output message format`    | JSON           |
-| `Tasks`    | 1             |
-
-</div>
--->
+    > Topic creation can be autoamted using API/ CLI/ Terraform and ksqlDB queries. This is not covered in this workshop.
 ***
 
 
