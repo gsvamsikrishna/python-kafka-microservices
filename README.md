@@ -421,9 +421,11 @@ You should see an output similar to this
 
 
 1. After starting all scripts and access the landing page (http://127.0.0.1:8000), customise your pizza and submit your order:
-![image](static/images/docs/webapp_menu.png)
+![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/730c5346-bcc3-4dfc-83c4-194cfaf61421)
 
-2. Once the order is submitted the webapp will produce an event to the Kafka topic ```pizza-ordered```:
+<!--![image](static/images/docs/webapp_menu.png)-->
+
+3. Once the order is submitted the webapp will produce an event to the Kafka topic ```pizza-ordered```:
 ```
 (webapp) INFO 21:00:39.603 - Event successfully produced
  - Topic 'pizza-ordered', Partition #5, Offset #18
@@ -431,8 +433,10 @@ You should see an output similar to this
  - Value: {"status": 100, "timestamp": 1676235639159, "order": {"extra_toppings": ["Mushroom", "Black olives", "Green pepper"], "customer_id": "d94a6c43d9f487c1bef659f05c002213", "name": "Italo", "sauce": "Tomato", "cheese": "Mozzarella", "main_topping": "Pepperoni"}}
  ```
 
-3. The webapp will display the confirmation of the order:
-![image](static/images/docs/webapp_order_confirmation.png)
+3. The webapp will display the status of the order:
+![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/50d94967-7523-42f7-b139-9f90f9c97846)
+
+<!--![image](static/images/docs/webapp_order_confirmation.png)-->
 
 4. The microservice **Deliver Pizza** (step 1/2) receives early warning about a new order by subscribing to topic ```pizza-ordered```. In a real life scenario it would get the ```customer_id``` data and query its data store (e.g., ksqlDB) and fetch the delivery address:
 ```
@@ -500,7 +504,9 @@ You should see an output similar to this
 ```
 
 11. The flow is completed and, hopefully, we now have a happy customer for getting a delicious and nutritious pizza in such fast manner. The webapp, if on the order status page (in this case http://127.0.0.1:8000/orders/b32ad) will display in real time the status of the pizza, all of that thanks to the CQRS pattern. In a real life scenario that could be easily achieved by using frameworks such as ReactJS, however in this project it is used JQuery/AJAX async calls to accomplish that:
-![image](static/images/docs/webapp_order_delivered.png)
+<!--![image](static/images/docs/webapp_order_delivered.png)-->
+![image](https://github.com/gsvamsikrishna/python-kafka-microservices/assets/73946498/e5f2e39e-b8da-4f28-840f-b0800cd10187)
+
 
 
 ***
